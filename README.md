@@ -21,11 +21,14 @@ This repository provides a Reinforcement Learning framework in Python from the M
 2. Activate threaded rendering (recommended):
     `system/usrset.txt -> threadedRenderingDuringSimulation = 1` 
 
-**Execute V-REP** (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)` 
-
 Recommended simulation settings for scenes in RL-ROS (already set in the provide ones):
 
 * Simulation step time: 50 ms  (default) 
 * Real-Time Simulation: Enabled
 * Multiplication factor: 3.00 (required CPU >= i3 3110m)
+
+ **Execute V-REP** 
+ (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)` 
+
+ 
  
