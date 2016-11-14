@@ -1,0 +1,34 @@
++--------------------------------------+---------------------------------------+
+|                                    ABOUT                                     |
++------------------------------------------------------------------------------+
+
+This file contains the list of people involved in the development of
+RL-ROBOT, which started at the
+Machine Perception and Intelligent Robotics (MAPIR) laboratory
+at the University of Malaga <http://mapir.isa.uma.es>
+
+If you feel someone is missing, please fork and pull-request.
+The following list is roughly sorted in reverse chronological order.
+
+
++--------------------------------------+---------------------------------------+
+|                          DEVELOPERS & CONTRIBUTORS                           |
++------------------------------------------------------------------------------+
+
+*	Angel Martinez-Tenor
+    angelmtenor@gmail.com
+    http://mapir.isa.uma.es/mapirwebsite/index.php/people/115-people/230-angel-martinez-tenor
+    main developer
+
+
++--------------------------------------+---------------------------------------+
+|                                    OTHERS                                    |
++------------------------------------------------------------------------------+
+
+Bug reports and new feature suggestions, provided by users world-wide,
+will usually be mentioned in the changelog.
+
+We kindly thank all of them for this valuable feedback.
+
+
+                              --- END OF FILE ---

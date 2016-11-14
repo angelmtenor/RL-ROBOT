@@ -1,0 +1,10 @@
+__pycache__
+*.py~
+
+# *.so
+
+results
+old
+
+
+.idea
