@@ -9,7 +9,7 @@
 import exp
 import rlrobot
 
-exp.ENVIRONMENT_TYPE = "MODEL"
+exp.ENVIRONMENT_TYPE = "VREP"
 exp.TASK_ID = "wander_1k"
 exp.FILE_MODEL = exp.TASK_ID + "_model"
 exp.N_EPISODES_MODEL = 1
@@ -17,12 +17,12 @@ exp.N_EPISODES_MODEL = 1
 exp.ALGORITHM = "TOSL"
 exp.ACTION_STRATEGY = "QBIASR"
 
-exp.N_REPETITIONS = 100
+exp.N_REPETITIONS = 1
 exp.N_EPISODES = 1
 exp.N_STEPS = 1 * 10 * 60
 
-exp.SUFFIX = ""
-exp.DISPLAY_STEP = 0
+exp.SUFFIX = "Video"
+exp.DISPLAY_STEP = 100
 
 rlrobot.run()
 

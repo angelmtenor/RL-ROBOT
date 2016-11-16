@@ -58,7 +58,7 @@ def execute_action(actuator):
     # 2 actions with only one wheel backwards changed to no motion (duplicated)
     if v_left < 0 and v_right < 0:
         v_left = v_right = MOTOR_SPEED * 2
-    elif v_left * v_right < 0:
+    elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
     robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
 
