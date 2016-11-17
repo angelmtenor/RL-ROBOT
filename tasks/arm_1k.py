@@ -59,7 +59,6 @@ def execute_action(actuator):
 
 # TASK DEFINITION: REWARDS ----------------------------------------------------
 REWARDS = np.array([-10.0, -2.0, -1.0, -0.02, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0])
-goal_reached = False
 
 
 def get_reward():  # abstract s,a,sp pointless here

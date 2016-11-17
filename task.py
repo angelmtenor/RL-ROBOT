@@ -6,28 +6,30 @@
 #   +-----------------------------------------------+
 """ Task template v1.1 """
 
+import math
+
 import numpy as np
 
 import agent
 import robot
 
 # Task Parameters:
-NAME = "Wander_1024s_9a"
-DESCRIPTION = "Wander avoiding obstacles. 5 lasers. 4 ranges each. 9 actions"
+NAME = "navigation_2D_1024s_9a"
+DESCRIPTION = "Navigation to a Goal. 16 pos / 8 orient / 8 lasers states"
 ROBOT = "Pioneer 3dx with 8-point laser"
-ENVIRONMENT = "VREP_SIM: square 6x6m with obstacles"
+ENVIRONMENT = "VREP_SIM: square 4x4m with obstacles and a goal"
 ENVIRONMENT_DETAIL = "SpeedX3. Threaded Render. Sens:Buffer, Act:Streaming"
 AGENT_ELEMENTS = ["MOBILE_BASE", "DISTANCE_SENSOR"]
-ENV_ELEMENTS = []
-# AGENT_ELEMENTS: "MOBILE_BASE","DISTANCE_SENSOR","GOAL","ARM"
+ENV_ELEMENTS = ["GOAL_OBJECT"]
+# AGENT_ELEMENTS: "MOBILE_BASE","DISTANCE_SENSOR", "ARM"
 # ENV_ELEMENTS: "GOAL_OBJECT"
 
 # Physical Parameters:
 STEP_TIME = 1  # s
 MOTOR_SPEED = 1  # rad/s (pioneer 3dx: 1 rad/s: ~ 0.1m/s)
-RANGE_OBSTACLES = 0.80  # m
+RANGE_OBSTACLES = 0.20  # m
 RANGE_DISPLACEMENT = 0.07  # m
-RANGE_DAMAGE = 0.05  # m
+RANGE_DAMAGE = 0.08  # m
 
 # STATES. Input variables:
 # Dictionary -> "variable name": (discrete intervals). Example:
@@ -35,11 +37,12 @@ RANGE_DAMAGE = 0.05  # m
 # "X": (0, 2, 4)    3 ranges: s(X)=0 if X<=2, =1 if X<4, =2 if X>4
 # For multiple linear intervals we suggest np.linspace
 INPUT_VARIABLES = {
-    "laser_front": np.linspace(0, RANGE_OBSTACLES, 4),
-    "laser_front_left": np.linspace(0, RANGE_OBSTACLES, 4),
-    "laser_left": np.linspace(0, RANGE_OBSTACLES, 4),
-    "laser_right": np.linspace(0, RANGE_OBSTACLES, 4),
-    "laser_front_right": np.linspace(0, RANGE_OBSTACLES, 4)
+    "mobile_x": np.linspace(3, 7, 4),  # V-REP scenario: (3 to 7)m in X
+    "mobile_y": np.linspace(3, 7, 4),  # V-REP scenario: (3 to 7)m in Y
+    "mobile_theta": np.linspace(-math.pi, math.pi, 8),
+    "laser_front": np.linspace(0, RANGE_OBSTACLES, 2),
+    "laser_front_left": np.linspace(0, RANGE_OBSTACLES, 2),
+    "laser_front_right": np.linspace(0, RANGE_OBSTACLES, 2)
 }
 OUTPUT_VARIABLES = {
     "left_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3),
@@ -58,34 +61,60 @@ def execute_action(actuator):
     # 2 actions with only one wheel backwards changed to no motion (duplicated)
     if v_left < 0 and v_right < 0:
         v_left = v_right = MOTOR_SPEED * 2
-    elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
+    elif (v_left == 0 and v_right <= 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
     robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
 
 
 # TASK DEFINITION: REWARDS ----------------------------------------------------
-REWARDS = np.array([-10.0, -2.0, -0.02, 10.0])
-goal_reached = False
+REWARDS = np.array([-10.0, -2.0, -1.0, -0.1, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0])
+THRES_STEPS_AT_GOAL = 5  # auxiliary: if the robot remains at the goal more than
+# this value, the step time will be reduced to accelerate the experiments
+steps_at_goal = 0
 
 
 def get_reward():  # abstract s,a,sp pointless here
     """ Return the reward from s,a,sp or the environment (recommended)"""
     # Sensors values already updated in robot.py when the state was observed
+    global steps_at_goal
+
     distance_fl = robot.sensor["laser_front_left"]
     distance_fr = robot.sensor["laser_front_right"]
     distance_f = robot.sensor["laser_front"]
-    displacement = robot.mobilebase_displacement2d
+    distance_robot_goal = robot.distance_mobilebase_goal
+    displacement_robot_goal = robot.mobilebase_goal_displacement2d
+    # if negative: MobileBase is getting closer
 
     n_collisions = (int(distance_fl < RANGE_DAMAGE) +
                     int(distance_fr < RANGE_DAMAGE) +
                     int(distance_f < RANGE_DAMAGE))
-    r = REWARDS[2]
-    if n_collisions > 1:  # big penalty
-        r = min(REWARDS)
+
+    r = REWARDS[3]
+
+    if distance_robot_goal < 0.5:  # robot reaches the goal
+        r = max(REWARDS)
+
+    elif n_collisions > 1:
+        r = min(REWARDS)  # big penalty
+
     elif n_collisions == 1:  # small penalty
         r = REWARDS[1]
-    elif displacement > RANGE_DISPLACEMENT:
-        r = max(REWARDS)
+
+    elif displacement_robot_goal > RANGE_DISPLACEMENT:  # moving away
+        r = REWARDS[2]
+
+    elif displacement_robot_goal < -RANGE_DISPLACEMENT:  # approaching
+        r = round(REWARDS[4] + 4 / distance_robot_goal)
+        r = r if r < 5 else 5
+
+    if r >= max(REWARDS):
+        steps_at_goal += 1
+        if steps_at_goal > THRES_STEPS_AT_GOAL:
+            # LE.step_time = LE.INITIAL_STEP_TIME/8.0
+            agent.goal_reached = True
+            robot.stop_motion()
+    else:
+        steps_at_goal = 0
 
     return r
 

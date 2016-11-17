@@ -134,7 +134,7 @@ def run():
         if step > 0 and step % exp.DISPLAY_STEP == 0:
             print("STEP: ", step)
 
-        if task.goal_reached:  # rest of the process filled with highest reward
+        if agent.goal_reached:  # rest of the process filled with highest reward
             sasr_step[step, 3] = r
             ave_r_step[step] = np.average(sasr_step[0: step, 3])
             continue

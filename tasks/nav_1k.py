@@ -71,13 +71,11 @@ REWARDS = np.array([-10.0, -2.0, -1.0, -0.1, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0])
 THRES_STEPS_AT_GOAL = 5  # auxiliary: if the robot remains at the goal more than
 # this value, the step time will be reduced to accelerate the experiments
 steps_at_goal = 0
-goal_reached = False
 
 
 def get_reward():  # abstract s,a,sp pointless here
     """ Return the reward from s,a,sp or the environment (recommended)"""
     # Sensors values already updated in robot.py when the state was observed
-    global goal_reached
     global steps_at_goal
 
     distance_fl = robot.sensor["laser_front_left"]
@@ -109,12 +107,11 @@ def get_reward():  # abstract s,a,sp pointless here
         r = round(REWARDS[4] + 4 / distance_robot_goal)
         r = r if r < 5 else 5
 
-    goal_reached = False
     if r >= max(REWARDS):
         steps_at_goal += 1
         if steps_at_goal > THRES_STEPS_AT_GOAL:
             # LE.step_time = LE.INITIAL_STEP_TIME/8.0
-            goal_reached = True
+            agent.goal_reached = True
             robot.stop_motion()
     else:
         steps_at_goal = 0

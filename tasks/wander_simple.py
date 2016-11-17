@@ -60,7 +60,6 @@ def execute_action(actuator):  # two differential drive wheels template
 
 # Rewards
 REWARDS = np.array([-10.0, -2.0, -0.02, 10.0])
-goal_reached = False
 
 
 def get_reward():  # abstract s,a,sp pointless here

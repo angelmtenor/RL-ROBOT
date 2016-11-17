@@ -29,6 +29,8 @@ VAR = np.empty(0)
 cont_VAR = np.empty(0)
 initiated = False
 
+goal_reached = False
+
 
 def setup_task():
     """ Task setup will be performed in the agent """
@@ -91,10 +93,7 @@ def setup_task():
 
 def setup():
     """ Create the variables needed for this module """
-    global Vs, Va, VAR, cont_VAR, initiated
-
-    if initiated:
-        return
+    global Vs, Va, VAR, cont_VAR, initiated, goal_reached
 
     robot.setup(task.AGENT_ELEMENTS, task.ENV_ELEMENTS)
 
@@ -110,7 +109,9 @@ def setup():
 
     action_selection.setup()
 
+    goal_reached = False
     initiated = True
+    print("Agent initiated")
     return
 
 
