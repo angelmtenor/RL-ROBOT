@@ -2,14 +2,15 @@
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
 
 ### Requirements
-* Python 3
-* numpy
-* matplotlib
+* Python >= 3.4
+* numpy >= 1.11
+* matplotlib >= 1.5
 * tkinter   `sudo apt-get install python-tk`
 
+Tested on Ubuntu 14.04 and 16.04 (64 bits).
 
 ### V-REP settings: 
-(Tested on V-REP_PRO_EDU_V3_3_2 64_bits Linux)
+(Tested version: V-REP PRO EDU V3.3.2)
 
 1. Use default values of `remoteApiConnections.txt`
     ~~~
@@ -29,6 +30,4 @@ Recommended simulation settings for scenes in RL-ROS (already set in the provide
 
  **Execute V-REP** 
  (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)` 
-
- 
  

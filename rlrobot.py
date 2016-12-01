@@ -44,7 +44,10 @@ def run():
     exp.check()  # Check experiment parameters
 
     # copy the selected taskfile to speed up the execution:
-    copyfile("tasks/" + exp.TASK_ID + ".py", "task.py")
+    try:
+        copyfile("tasks/" + exp.TASK_ID + ".py", "task.py")
+    except IOError:
+        sys.exit("Task " + exp.TASK_ID + " not found. Please check exp.TASK_ID")
     import task
     import robot
     import lp

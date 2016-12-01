@@ -63,12 +63,16 @@ def show_msg(message):
 
 def connect():
     """ Connect to the simulator"""
+    ip = '127.0.0.1'
+    port = 19997
     vrep.simxFinish(-1)  # just in case, close all opened connections
     global clientID
-    clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 3000, 5)
+    clientID = vrep.simxStart(ip, port, True, True, 3000, 5)
     # Connect to V-REP
-    assert (clientID != -1), ("\n\n V-REP remote API server connection failed. "
-                              "Is V-REP running?")
+    if clientID == -1:
+        import sys
+        sys.exit('\nV-REP remote API server connection failed (' + ip +
+                 ':' + str(port) + '). Is V-REP running?')
     print('Connected to Robot')
     show_msg('Python: Hello')
     time.sleep(0.5)
