@@ -1,6 +1,9 @@
 # RL-ROBOT
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
 
+Reference paper "Towards a common implementation of reinforcement learning for multiple robotics tasks" (under revision)
+
+
 ### Requirements
 * Python >= 3.4
 * numpy >= 1.11
@@ -30,4 +33,5 @@ Recommended simulation settings for scenes in RL-ROS (already set in the provide
 
  **Execute V-REP** 
  (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)` 
+ 
  
