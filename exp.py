@@ -11,7 +11,7 @@ import time
 import numpy as np
 
 # Basic parameters -------------------------------------------------------------
-TASK_ID = "wander_1Ks"  # task filename from tasks folder
+TASK_ID = "wander_1k"  # task filename from tasks folder
 ENVIRONMENT_TYPE = "MODEL"  # available: "MODEL", "VREP", "ROS"
 SPEED_RATE = 3.0  # Recommended: REAL ROBOT: 1.0 (x1), VREP: 3.0 (x3)
 
@@ -29,7 +29,7 @@ DISPLAY_STEP = 0  # Policy will be printed each DISPLAY_STEP
 # Learning parameters ----------------------------------------------------------
 ALGORITHM = "TOSL"  # "TOSL": true online SARSA lambda, "SL": SARSA lambda,
 #  "S": SARSA, Q: "Q-learning
-ACTION_STRATEGY = "QBIASR"  # "QBIASR"; Q-biased softmax regression,
+ACTION_STRATEGY = "QBIASSR"  # "QBIASSR"; Q-biased softmax regression,
 # "softmax": softmax regression, "eGreedy", "random", "exploit"
 ALPHA = 0.1
 GAMMA = 0.9

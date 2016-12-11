@@ -4,7 +4,7 @@
 #   | Angel Martinez-Tenor                          |
 #   | MAPIR. University of Malaga. 2016             |
 #   +-----------------------------------------------+
-""" Q-Biased Softmax Regression (QBIASR) v0.8.7 optimized """
+""" Q-Biased Softmax Regression (QBIASSR) v0.8.7 optimized """
 
 import math
 import random
@@ -30,7 +30,7 @@ initiated = False
 
 
 def setup():
-    """ Initializes QBIASR """
+    """ Initializes QBIASSR """
     global control_sequence, rewards_sequence, comb, mix, initiated
 
     # size_sequence = size of eli queue: n < log(threshold) / log(gamma*lambda)
@@ -96,8 +96,8 @@ def custom_softmax(input_array, temp):
 
 
 def select_biased_action(s):
-    """ Select an action 'a' given state 's' by QBIASR """
-    assert initiated, " QBIASR not initiated! setup() must be called previously"
+    """ Select an action 'a' given state 's' by QBIASSR """
+    assert initiated, " QBIASSR not initiated! setup() must be called previously"
 
     # n_combinations = math.factorial(N_INPUTS)/(math.factorial(level)*
     #  math.factorial(N_INPUTS-level))

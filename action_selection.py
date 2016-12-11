@@ -16,8 +16,8 @@ import exp
 import lp
 import task
 
-if exp.ACTION_STRATEGY == "QBIASR":
-    import action_qbiasr
+if exp.ACTION_STRATEGY == "QBIASSR":
+    import action_qbiassr
 
 EPSILON = 0.3  # e-greedy
 LEAST_EXPLORED = 0.3  # Probability of choose the least explored action
@@ -26,10 +26,10 @@ initiated = False
 
 
 def setup():
-    """ Initialize QBIASR if needed """
+    """ Initialize QBIASSR if needed """
     global initiated
-    if exp.ACTION_STRATEGY == "QBIASR":
-        action_qbiasr.setup()
+    if exp.ACTION_STRATEGY == "QBIASSR":
+        action_qbiassr.setup()
     initiated = True
 
 
@@ -66,8 +66,8 @@ def execute(s):
     elif exp.ACTION_STRATEGY == "softmax":
         selected_action = softmax(s)
 
-    elif exp.ACTION_STRATEGY == "QBIASR":  # novel technique
-        selected_action = action_qbiasr.select_biased_action(s)
+    elif exp.ACTION_STRATEGY == "QBIASSR":  # novel technique
+        selected_action = action_qbiassr.select_biased_action(s)
 
     else:
         sys.exit("ERROR:   WRONG ACTION STRATEGY: " + exp.ACTION_STRATEGY)

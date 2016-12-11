@@ -9,13 +9,13 @@
 import exp
 import rlrobot
 
-exp.ENVIRONMENT_TYPE = "VREP"
+exp.ENVIRONMENT_TYPE = "MODEL"
 exp.TASK_ID = "wander_1k"
-# exp.FILE_MODEL = exp.TASK_ID + "_model"
+exp.FILE_MODEL = exp.TASK_ID + "_model"
 # exp.N_EPISODES_MODEL = 1
 
 exp.ALGORITHM = "TOSL"
-exp.ACTION_STRATEGY = "QBIASR"
+exp.ACTION_STRATEGY = "QBIASSR"
 
 exp.N_REPETITIONS = 1
 exp.N_EPISODES = 1
