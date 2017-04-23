@@ -15,7 +15,7 @@ TASK_ID = "wander_1k"  # task filename from tasks folder
 ENVIRONMENT_TYPE = "MODEL"  # available: "MODEL", "VREP", "ROS"
 SPEED_RATE = 3.0  # Recommended: REAL ROBOT: 1.0 (x1), VREP: 3.0 (x3)
 
-N_REPETITIONS = 100  # Number of repetitions of the experiment
+N_REPETITIONS = 1  # Number of repetitions of the experiment
 N_EPISODES = 1  # >1 for episodic experiments: Uses arrays from previous epi
 N_STEPS = 1 * 60 * 60  # 1 step ~ 1 second (Sets LE.N_STEPS)
 
@@ -24,7 +24,7 @@ N_EPISODES_MODEL = 1  # MODEL environment only
 CONTINUE_PREVIOUS_EXP = False
 PREVIOUS_EXP_FILE = ""
 
-DISPLAY_STEP = 0  # Policy will be printed each DISPLAY_STEP
+DISPLAY_STEP = 500  # Policy will be printed each DISPLAY_STEP
 
 # Learning parameters ----------------------------------------------------------
 ALGORITHM = "TOSL"  # "TOSL": true online SARSA lambda, "SL": SARSA lambda,

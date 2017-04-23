@@ -22,7 +22,7 @@ exp.N_EPISODES = 1
 exp.N_STEPS = 60 * 60
 
 exp.SUFFIX = ""
-exp.DISPLAY_STEP = 100
+exp.DISPLAY_STEP = 500
 
 rlrobot.run()
 
