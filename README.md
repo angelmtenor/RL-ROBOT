@@ -29,13 +29,13 @@ exp.N_STEPS = 60 * 60
 
 exp.DISPLAY_STEP = 500
 
->>> rlrobot.run()
+rlrobot.run()
 ~~~
 Full set of parameters available in `exp.py`. 
 
 
 ### V-REP settings: 
-(Tested version: V-REP PRO EDU V3.3.2)
+Tested version: V-REP PRO EDU V3.3.2
 
 1. Use default values of `remoteApiConnections.txt`
     ~~~
