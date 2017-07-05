@@ -1,7 +1,7 @@
 # RL-ROBOT
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
 
-Reference paper: Towards a common implementation of reinforcement learning for multiple robotics tasks" [(arxiv)](https://arxiv.org/pdf/1702.06329.pdf)
+Reference paper "Towards a common implementation of reinforcement learning for multiple robotics tasks" [(arxiv)](https://arxiv.org/pdf/1702.06329.pdf)
 
 ### Requirements
 * Python >= 3.4
