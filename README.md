@@ -1,7 +1,7 @@
 # RL-ROBOT
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
 
-Reference paper "Towards a common implementation of reinforcement learning for multiple robotics tasks" (under revision)
+Reference paper: Towards a common implementation of reinforcement learning for multiple robotics tasks" [(arxiv)](https://arxiv.org/pdf/1702.06329.pdf)
 
 ### Requirements
 * Python >= 3.4
@@ -13,21 +13,21 @@ Tested on Ubuntu 14.04 and 16.04 (64 bits).
 
 ### Try RL-ROBOT:
 ~~~
->>> import exp
->>> import rlrobot
+import exp
+import rlrobot
 
->>> exp.ENVIRONMENT_TYPE = "MODEL"
->>> exp.TASK_ID = "wander_1k"
->>> exp.FILE_MODEL = exp.TASK_ID + "_model"
+exp.ENVIRONMENT_TYPE = "MODEL"
+exp.TASK_ID = "wander_1k"
+exp.FILE_MODEL = exp.TASK_ID + "_model"
+
+exp.ALGORITHM = "TOSL"
+exp.ACTION_STRATEGY = "QBIASSR"
  
->>> exp.ALGORITHM = "TOSL"
->>> exp.ACTION_STRATEGY = "QBIASSR"
- 
->>> exp.N_REPETITIONS = 1
->>> exp.N_EPISODES = 1
->>> exp.N_STEPS = 60 * 60
- 
->>> exp.DISPLAY_STEP = 500
+exp.N_REPETITIONS = 1
+exp.N_EPISODES = 1
+exp.N_STEPS = 60 * 60
+
+exp.DISPLAY_STEP = 500
 
 >>> rlrobot.run()
 ~~~
