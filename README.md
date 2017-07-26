@@ -1,9 +1,20 @@
 # RL-ROBOT
+
+<img alt="Robot" src="images/test_giraff.jpg" width="300">
+
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
 
 Reference paper "Towards a common implementation of reinforcement learning for multiple robotics tasks" [(arxiv)](https://arxiv.org/pdf/1702.06329.pdf)
 
-### Requirements
+
+
+
+
+
+
+
+
+## Requirements
 * Python >= 3.4
 * numpy >= 1.11
 * matplotlib >= 1.5
@@ -11,7 +22,10 @@ Reference paper "Towards a common implementation of reinforcement learning for m
 
 Tested on Ubuntu 14.04 and 16.04 (64 bits).
 
-### Try RL-ROBOT:
+## Try RL-ROBOT:
+
+<img alt="Architecture" src="images/architecture.jpg" width="600">
+
 ~~~
 import exp
 import rlrobot
@@ -34,8 +48,11 @@ rlrobot.run()
 Full set of parameters available in `exp.py`. 
 
 
-### V-REP settings: 
+## V-REP settings: 
 Tested version: V-REP PRO EDU V3.3.2
+
+![Scenarios](images/scenarios.jpg)
+
 
 1. Use default values of `remoteApiConnections.txt`
     ~~~
