@@ -87,7 +87,7 @@ def setup_task():
     task.n_actions = n_actions
     task.out_data = output_data
 
-    print("Task setup: {} \t States: {} \t Actions {} ".format(
+    print("Task {} \t {} states \t {} actions".format(
         task.NAME, n_states, n_actions))
 
 

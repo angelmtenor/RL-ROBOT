@@ -7,13 +7,6 @@ This repository provides a Reinforcement Learning framework in Python from the M
 Reference paper "Towards a common implementation of reinforcement learning for multiple robotics tasks" [(arxiv)](https://arxiv.org/pdf/1702.06329.pdf)
 
 
-
-
-
-
-
-
-
 ## Requirements
 * Python >= 3.4
 * numpy >= 1.11

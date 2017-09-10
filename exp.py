@@ -11,13 +11,13 @@ import time
 import numpy as np
 
 # Basic parameters -------------------------------------------------------------
-TASK_ID = "wander_1k"  # task filename from tasks folder
-ENVIRONMENT_TYPE = "MODEL"  # available: "MODEL", "VREP", "ROS"
+TASK_ID = "wander_12k"  # task filename from tasks folder
+ENVIRONMENT_TYPE = "VREP"  # available: "MODEL", "VREP", "ROS"
 SPEED_RATE = 3.0  # Recommended: REAL ROBOT: 1.0 (x1), VREP: 3.0 (x3)
 
 N_REPETITIONS = 1  # Number of repetitions of the experiment
 N_EPISODES = 1  # >1 for episodic experiments: Uses arrays from previous epi
-N_STEPS = 1 * 60 * 60  # 1 step ~ 1 second (Sets LE.N_STEPS)
+N_STEPS = 3 * 60 * 60  # 1 step ~ 1 second (Sets LE.N_STEPS)
 
 FILE_MODEL = TASK_ID + "_model"  # MODEL environment only
 N_EPISODES_MODEL = 1  # MODEL environment only
@@ -29,7 +29,7 @@ DISPLAY_STEP = 500  # Policy will be printed each DISPLAY_STEP
 # Learning parameters ----------------------------------------------------------
 ALGORITHM = "TOSL"  # "TOSL": true online SARSA lambda, "SL": SARSA lambda,
 #  "S": SARSA, Q: "Q-learning
-ACTION_STRATEGY = "QBIASSR"  # "QBIASSR"; Q-biased softmax regression,
+ACTION_STRATEGY = "softmax"  # "QBIASSR"; Q-biased softmax regression,
 # "softmax": softmax regression, "eGreedy", "random", "exploit"
 ALPHA = 0.1
 GAMMA = 0.9
