@@ -64,6 +64,4 @@ Recommended simulation settings for V-REP scenes (already set in the provide one
 * Multiplication factor: 3.00 (required CPU >= i3 3110m)
 
  **Execute V-REP** 
- (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)` 
- 
- 
+ (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)`  

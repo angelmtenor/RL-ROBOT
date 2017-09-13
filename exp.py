@@ -29,7 +29,7 @@ DISPLAY_STEP = 500  # Policy will be printed each DISPLAY_STEP
 # Learning parameters ----------------------------------------------------------
 ALGORITHM = "TOSL"  # "TOSL": true online SARSA lambda, "SL": SARSA lambda,
 #  "S": SARSA, Q: "Q-learning
-ACTION_STRATEGY = "softmax"  # "QBIASSR"; Q-biased softmax regression,
+ACTION_STRATEGY = "QBIASSR"  # "QBIASSR"; Q-biased softmax regression,
 # "softmax": softmax regression, "eGreedy", "random", "exploit"
 ALPHA = 0.1
 GAMMA = 0.9

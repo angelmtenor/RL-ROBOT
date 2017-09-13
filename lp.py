@@ -84,7 +84,7 @@ def setup():
     alpha = exp.ALPHA
     delta = 0
 
-    q = np.zeros((task.n_states, task.n_actions), dtype=np.float64)
+    q = np.zeros((task.n_states, task.n_actions), dtype=np.float32)
     v = np.zeros(task.n_states, dtype=np.float64)
     policy = np.full(task.n_states, task.INITIAL_POLICY, dtype=np.uint32)
     q_count = np.zeros((task.n_states, task.n_actions), dtype=np.uint64)
