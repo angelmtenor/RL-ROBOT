@@ -24,7 +24,7 @@ N_EPISODES_MODEL = 1  # MODEL environment only
 CONTINUE_PREVIOUS_EXP = False
 PREVIOUS_EXP_FILE = ""
 
-DISPLAY_STEP = 500  # Policy will be printed each DISPLAY_STEP
+DISPLAY_STEP = 1800  # Policy will be printed each DISPLAY_STEP
 
 # Learning parameters ----------------------------------------------------------
 ALGORITHM = "TOSL"  # "TOSL": true online SARSA lambda, "SL": SARSA lambda,
