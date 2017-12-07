@@ -38,6 +38,11 @@ def setup():
     threshold = 0.01
     eli_size = int(math.log(threshold) / math.log(exp.GAMMA * exp.LAMBDA))
     # a FIFO queue will hold the states to update (eligibility >= 0.01)
+
+    # uncomment for non-reduced ET  (high-computational cost without performance gain)
+    # threshold = 0
+    # eli_size = task.n_states    
+
     eli_queue = deque([], eli_size)
     initiated = True
 

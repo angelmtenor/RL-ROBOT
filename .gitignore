@@ -1,11 +1,9 @@
 __pycache__
 *.py~
-
 # *.so
-
 results
 old
-
-
 .idea
 tasks/wander_HD.py
+.vscode/launch.json
+run_time_exp.py
