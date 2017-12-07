@@ -47,8 +47,8 @@ def setup():
     # Create mix[s], index[s], subrow[s]
     n_inputs = task.n_inputs
     n_states = task.n_states
-    comb = np.array(list(combinations(range(n_inputs), n_inputs - 1)),
-                    dtype=np.int16)
+    comb = np.array(
+        list(combinations(range(n_inputs), n_inputs - 1)), dtype=np.int16)
     mix = np.full([n_states, n_inputs, n_states], -1, dtype=np.int)
     index = np.full(([n_states, n_inputs, n_states]), -1, dtype=np.int)
 

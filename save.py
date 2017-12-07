@@ -114,8 +114,8 @@ def log(mean_ave_r, mean_actual_step_time):
 def arrays(suffix=""):
     """ Save resulting arrays: Policy, V, Q, Q_count (textfile)"""
     filename = path + "_" + suffix if suffix else path
-    np.savez_compressed(filename, Policy=lp.policy, V=lp.v, Q=lp.q,
-                        Q_count=lp.q_count)
+    np.savez_compressed(
+        filename, Policy=lp.policy, V=lp.v, Q=lp.q, Q_count=lp.q_count)
 
 
 def plot_simple(data, suffix="", tittle=""):

@@ -47,7 +47,8 @@ def run():
     try:
         copyfile("tasks/" + exp.TASK_ID + ".py", "task.py")
     except IOError:
-        sys.exit("Task " + exp.TASK_ID + " not found. Please check exp.TASK_ID")
+        sys.exit("Task " + exp.TASK_ID +
+                 " not found. Please check exp.TASK_ID")
     import task
     import robot
     import lp

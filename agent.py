@@ -87,8 +87,8 @@ def setup_task():
     task.n_actions = n_actions
     task.out_data = output_data
 
-    print("Task {} \t {} states \t {} actions".format(
-        task.NAME, n_states, n_actions))
+    print("Task {} \t {} states \t {} actions".format(task.NAME, n_states,
+                                                      n_actions))
 
 
 def setup():
@@ -99,8 +99,7 @@ def setup():
 
     Vs = 0
     Va = 0
-    VAR = np.full((n_inputs, int(max(in_sizes)), n_states), -1,
-                  dtype=np.int)
+    VAR = np.full((n_inputs, int(max(in_sizes)), n_states), -1, dtype=np.int)
     cont_VAR = np.full((n_inputs, int(max(in_sizes))), 0, dtype=np.int)
 
     generate_vs()
@@ -270,8 +269,7 @@ def generate_va():
 def generate_var():
     """ Generate Variable Matrix (input, input_value, count) -> state """
     global VAR, cont_VAR
-    VAR = np.full((n_inputs, int(max(in_sizes)), n_states), -1,
-                  dtype=np.int)
+    VAR = np.full((n_inputs, int(max(in_sizes)), n_states), -1, dtype=np.int)
     cont_VAR = np.full((n_inputs, int(max(in_sizes))), 0, dtype=np.int)
 
     for s in range(n_states):

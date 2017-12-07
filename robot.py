@@ -125,7 +125,8 @@ def update():
     if "ARM" in AGENT_ELEMENTS:
         last_gripper_pose3d = gripper_pose3d
         gripper_pose3d = link.get_gripper_pose3d()
-        gripper_displacement3d = distance3d(gripper_pose3d, last_gripper_pose3d)
+        gripper_displacement3d = distance3d(gripper_pose3d,
+                                            last_gripper_pose3d)
 
     if "GOAL_OBJECT" in ENV_ELEMENTS:
         last_goal_pose3d = link.get_goal_pose_3d()
@@ -136,15 +137,15 @@ def update():
             last_distance_mobilebase_goal = distance_mobilebase_goal
             distance_mobilebase_goal = distance2d(goal_pose3d,
                                                   mobilebase_pose2d)
-            mobilebase_goal_displacement2d = (distance_mobilebase_goal -
-                                              last_distance_mobilebase_goal)
+            mobilebase_goal_displacement2d = (
+                distance_mobilebase_goal - last_distance_mobilebase_goal)
             # Negative: the mobilebase is getting closer
 
         if "ARM" in AGENT_ELEMENTS:
             last_distance_gripper_goal = distance_gripper_goal
             distance_gripper_goal = distance3d(goal_pose3d, gripper_pose3d)
-            gripper_goal_displacement3d = (distance_gripper_goal -
-                                           last_distance_gripper_goal)
+            gripper_goal_displacement3d = (
+                distance_gripper_goal - last_distance_gripper_goal)
             # Negative: the arm is getting closer
 
     sensor["mobile_x"] = mobilebase_pose2d[0]
@@ -215,7 +216,7 @@ def get_goal_pose3d():
 def distance2d(pose_a, pose_b):
     """ get distance 2d (x,y axis) between 2 poses """
     delta_pose2d = abs(pose_a - pose_b)
-    displacement2d = math.sqrt(delta_pose2d[0] ** 2 + delta_pose2d[1] ** 2)
+    displacement2d = math.sqrt(delta_pose2d[0]**2 + delta_pose2d[1]**2)
     return displacement2d
 
 
@@ -223,8 +224,8 @@ def distance3d(pose_a, pose_b):
     """ get distance 3d between 2 poses """
 
     delta_pose3d = abs(pose_a - pose_b)
-    displacement3d = math.sqrt(delta_pose3d[0] ** 2 + delta_pose3d[1] ** 2 +
-                               delta_pose3d[2] ** 2)
+    displacement3d = math.sqrt(delta_pose3d[0]**2 + delta_pose3d[1]**2 +
+                               delta_pose3d[2]**2)
     return displacement3d
 
 

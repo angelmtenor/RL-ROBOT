@@ -41,7 +41,7 @@ def setup():
 
     # uncomment for non-reduced ET  (high-computational cost without performance gain)
     # threshold = 0
-    # eli_size = task.n_states    
+    # eli_size = task.n_states
 
     eli_queue = deque([], eli_size)
     initiated = True

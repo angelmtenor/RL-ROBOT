@@ -25,16 +25,22 @@ freq_r = np.empty(0)
 
 def generate_t_and_r(datafile_model, n_episodes_model=1):
     """ generate Transition and Reward functions from a 'SASR_step' datafile """
-    global t, r, s0, freq_t, freq_r
-    t = np.zeros((task.n_states, task.n_actions, task.n_states),
-                 dtype=np.float16)
-    r = np.zeros((task.n_states, task.n_actions, task.n_states,
-                  task.REWARDS.size), dtype=np.float16)
 
-    freq_t = np.zeros((task.n_states, task.n_actions, task.n_states),
-                      dtype=np.uint32)
-    freq_r = np.zeros((task.n_states, task.n_actions, task.n_states,
-                       task.REWARDS.size), dtype=np.uint32)
+    global t, r, s0, freq_t, freq_r
+    t = np.zeros(
+        (task.n_states, task.n_actions, task.n_states), dtype=np.float16)
+        
+    r = np.zeros(
+        (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
+        dtype=np.float16)
+
+    freq_t = np.zeros(
+        (task.n_states, task.n_actions, task.n_states), dtype=np.uint32)
+
+    freq_r = np.zeros(
+        (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
+        dtype=np.uint32)
+
     print("Generating T and R. Please wait ...")
 
     for epi in range(n_episodes_model):
@@ -75,8 +81,8 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
                     if partial_sum_r == 0:
                         r[s, a, sp, ty_re] = 1.0 / task.REWARDS.size
                     else:
-                        r[s, a, sp, ty_re] = (freq_r[s, a, sp, ty_re] /
-                                              partial_sum_r)
+                        r[s, a, sp, ty_re] = (
+                            freq_r[s, a, sp, ty_re] / partial_sum_r)
     return
 
 

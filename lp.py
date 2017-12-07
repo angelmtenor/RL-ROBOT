@@ -107,7 +107,8 @@ def setup():
     #  q_limit = max(TASK.REWARDS)/(1-EXP.GAMMA)
 
     if q_limit != 100:
-        print("q_limit = ", str(q_limit),
+        print("q_limit = ",
+              str(q_limit),
               ". Softmax regression will be normalized as q_limit = 100")
         time.sleep(2)
 
@@ -136,7 +137,7 @@ def run():
 
         if agent.goal_reached:  # rest of the process filled with highest reward
             sasr_step[step, 3] = r
-            ave_r_step[step] = np.average(sasr_step[0: step, 3])
+            ave_r_step[step] = np.average(sasr_step[0:step, 3])
             continue
 
         # Execute the selected learning algorithm. Also change lp variables
@@ -152,7 +153,7 @@ def run():
         if step == 0:
             ave_r_step[step] = sasr_step[step, 3]
         else:
-            ave_r_step[step] = np.average(sasr_step[0: step, 3])
+            ave_r_step[step] = np.average(sasr_step[0:step, 3])
 
         # Display information
         if step > 0 and step % exp.DISPLAY_STEP == 0:

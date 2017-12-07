@@ -61,7 +61,8 @@ def execute_action(actuator):
         v_left = v_right = MOTOR_SPEED * 2
     elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
-    robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
+    robot.move_wheels(v_left,
+                      v_right)  # left wheel, right_wheel speeds (rad/s)
 
 
 # TASK DEFINITION: REWARDS ----------------------------------------------------
@@ -76,9 +77,8 @@ def get_reward():  # abstract s,a,sp pointless here
     distance_f = robot.sensor["laser_front"]
     displacement = robot.mobilebase_displacement2d
 
-    n_collisions = (int(distance_fl < RANGE_DAMAGE) +
-                    int(distance_fr < RANGE_DAMAGE) +
-                    int(distance_f < RANGE_DAMAGE))
+    n_collisions = (int(distance_fl < RANGE_DAMAGE) + int(
+        distance_fr < RANGE_DAMAGE) + int(distance_f < RANGE_DAMAGE))
 
     r = REWARDS[2]
     if n_collisions > 1:  # big penalty

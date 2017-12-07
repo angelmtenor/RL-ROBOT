@@ -69,8 +69,8 @@ def setup():
     # ToDo: Change to 'odom' in ROS launch for Giraff:
     rospy.Subscriber('odom_giraff', Odometry, callback_odom)
     rospy.Subscriber('laser_scan', LaserScan, callback_base_scan)
-    pub_cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=1,
-                                  tcp_nodelay=True)
+    pub_cmd_vel = rospy.Publisher(
+        'cmd_vel', Twist, queue_size=1, tcp_nodelay=True)
 
     srv_reset_positions = rospy.ServiceProxy('reset_positions', Empty)
 
@@ -239,6 +239,7 @@ def reset_robot():
     """ Call to a Reset ROS service if available """
     rospy.wait_for_service('reset_positions')
     return
+
 
 # ToDo: Implement the following functions to use an arm in ROS
 

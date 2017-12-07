@@ -71,8 +71,8 @@ def connect():
     # Connect to V-REP
     if clientID == -1:
         import sys
-        sys.exit('\nV-REP remote API server connection failed (' + ip +
-                 ':' + str(port) + '). Is V-REP running?')
+        sys.exit('\nV-REP remote API server connection failed (' + ip + ':' +
+                 str(port) + '). Is V-REP running?')
     print('Connected to Robot')
     show_msg('Python: Hello')
     time.sleep(0.5)
@@ -126,20 +126,18 @@ def setup_devices():
         ec, laserID[idx] = vrep.simxGetObjectHandle(clientID, item, WAIT)
     # arm
     if HAS_ARM:
-        rc, armID = vrep.simxGetObjectHandle(
-            clientID, 'arm_joint', WAIT)
-        rc, bicepsID = vrep.simxGetObjectHandle(
-            clientID, 'biceps_joint', WAIT)
-        rc, forearmID = vrep.simxGetObjectHandle(
-            clientID, 'forearm_joint', WAIT)
-        rc, gripperID = vrep.simxGetObjectHandle(
-            clientID, 'gripper_1_visual', WAIT)
+        rc, armID = vrep.simxGetObjectHandle(clientID, 'arm_joint', WAIT)
+        rc, bicepsID = vrep.simxGetObjectHandle(clientID, 'biceps_joint', WAIT)
+        rc, forearmID = vrep.simxGetObjectHandle(clientID, 'forearm_joint',
+                                                 WAIT)
+        rc, gripperID = vrep.simxGetObjectHandle(clientID, 'gripper_1_visual',
+                                                 WAIT)
     # Kinect
     if HAS_KINECT:
-        rc, kinect_rgb_ID = vrep.simxGetObjectHandle(
-            clientID, 'kinect_rgb', WAIT)
-        rc, kinect_depth_ID = vrep.simxGetObjectHandle(
-            clientID, 'kinect_depth', WAIT)
+        rc, kinect_rgb_ID = vrep.simxGetObjectHandle(clientID, 'kinect_rgb',
+                                                     WAIT)
+        rc, kinect_depth_ID = vrep.simxGetObjectHandle(clientID,
+                                                       'kinect_depth', WAIT)
     # ball
     if HAS_GOAL_OBJECT:
         rc, ballID = vrep.simxGetObjectHandle(clientID, 'Ball', WAIT)
@@ -218,7 +216,8 @@ def get_distance_obstacle():
 def move_wheels(v_left, v_right):
     """ move the wheels. Input: Angular velocities in rad/s """
     vrep.simxSetJointTargetVelocity(clientID, left_motorID, v_left, STREAMING)
-    vrep.simxSetJointTargetVelocity(clientID, right_motorID, v_right, STREAMING)
+    vrep.simxSetJointTargetVelocity(clientID, right_motorID, v_right,
+                                    STREAMING)
     return
 
 
