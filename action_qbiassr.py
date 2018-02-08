@@ -50,7 +50,13 @@ def setup():
     comb = np.array(
         list(combinations(range(n_inputs), n_inputs - 1)), dtype=np.int16)
     mix = np.full([n_states, n_inputs, n_states], -1, dtype=np.int)
-    index = np.full(([n_states, n_inputs, n_states]), -1, dtype=np.int)
+    try:
+        index = np.full(([n_states, n_inputs, n_states]), -1, dtype=np.int)
+    except MemoryError:
+        mem = (n_states **2) * n_inputs * np.dtype(np.int).itemsize / (2**20)
+        print( "There is Not Enough Memory. Needed {:.1f} GB.".format(mem))
+        print( "Please, select another task or reduce the number of states.")
+        exit()
 
     for s in range(n_states):
         ss = agent.unwrap_state(s)

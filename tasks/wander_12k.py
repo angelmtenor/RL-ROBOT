@@ -105,16 +105,16 @@ def setup():
     agent.setup_task()
 
 
-n_inputs = int
+n_inputs = None
 in_values = [None]
 in_names = [None]
-in_sizes = [int]
-n_states = int
+in_sizes = [None]
+n_states = None
 in_data = [None]
 
-n_outputs = int
+n_outputs = None
 out_values = [None]
 out_names = [None]
-out_sizes = [int]
-n_actions = int
+out_sizes = [None]
+n_actions = None
 out_data = [None]

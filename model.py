@@ -27,9 +27,17 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
     """ generate Transition and Reward functions from a 'SASR_step' datafile """
 
     global t, r, s0, freq_t, freq_r
-    t = np.zeros(
-        (task.n_states, task.n_actions, task.n_states), dtype=np.float16)
-        
+    
+    try:
+        t = np.zeros(
+            (task.n_states, task.n_actions, task.n_states), dtype=np.float16)
+    except MemoryError:
+        mem = (task.n_states **2) * task.n_actions * np.dtype(np.float16).itemsize / (2**20)
+        print( "There is Not Enough Memory. Needed {:.1f} GB.".format(mem))
+        print( "Please, select another task or reduce the number of states.")
+        exit()
+
+
     r = np.zeros(
         (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
         dtype=np.float16)

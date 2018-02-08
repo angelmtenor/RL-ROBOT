@@ -61,8 +61,7 @@ def execute_action(actuator):
         v_left = v_right = MOTOR_SPEED * 2
     elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
-    robot.move_wheels(v_left,
-                      v_right)  # left wheel, right_wheel speeds (rad/s)
+    robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
 
 
 # TASK DEFINITION: REWARDS ----------------------------------------------------
@@ -77,8 +76,9 @@ def get_reward():  # abstract s,a,sp pointless here
     distance_f = robot.sensor["laser_front"]
     displacement = robot.mobilebase_displacement2d
 
-    n_collisions = (int(distance_fl < RANGE_DAMAGE) + int(
-        distance_fr < RANGE_DAMAGE) + int(distance_f < RANGE_DAMAGE))
+    n_collisions = (int(distance_fl < RANGE_DAMAGE) +
+                    int(distance_fr < RANGE_DAMAGE) +
+                    int(distance_f < RANGE_DAMAGE))
 
     r = REWARDS[2]
     if n_collisions > 1:  # big penalty
@@ -105,16 +105,16 @@ def setup():
     agent.setup_task()
 
 
-n_inputs = int
+n_inputs = None
 in_values = [None]
 in_names = [None]
-in_sizes = [int]
-n_states = int
+in_sizes = [None]
+n_states = None
 in_data = [None]
 
-n_outputs = int
+n_outputs = None
 out_values = [None]
 out_names = [None]
-out_sizes = [int]
-n_actions = int
+out_sizes = [None]
+n_actions = None
 out_data = [None]

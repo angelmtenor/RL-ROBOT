@@ -13,15 +13,15 @@ import exp
 import robot
 import task
 
-n_inputs = int
+n_inputs = None
 in_values = [None]
-in_sizes = [int]
-n_outputs = int
+in_sizes = [None]
+n_outputs = None
 out_values = [None]
-out_sizes = [int]
+out_sizes = [None]
 
-n_states = int
-n_actions = int
+n_states = None
+n_actions = None
 
 Vs = np.empty(0)
 Va = np.empty(0)
