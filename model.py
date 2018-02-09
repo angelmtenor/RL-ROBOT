@@ -31,23 +31,24 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
     try:
         t = np.zeros(
             (task.n_states, task.n_actions, task.n_states), dtype=np.float16)
+
+        r = np.zeros(
+            (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
+            dtype=np.float16)
+
+        freq_t = np.zeros(
+            (task.n_states, task.n_actions, task.n_states), dtype=np.uint32)
+
+        freq_r = np.zeros(
+            (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
+            dtype=np.uint32)
+
     except MemoryError:
-        mem = (task.n_states **2) * task.n_actions * np.dtype(np.float16).itemsize / (2**20)
-        print( "There is Not Enough Memory. Needed {:.1f} GB.".format(mem))
+        # mem = (task.n_states **2) * task.n_actions * np.dtype(np.float16).itemsize / (2**20)
+        print( "There is Not Enough Memory to generate the Markovian model" )
         print( "Please, select another task or reduce the number of states.")
         exit()
 
-
-    r = np.zeros(
-        (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
-        dtype=np.float16)
-
-    freq_t = np.zeros(
-        (task.n_states, task.n_actions, task.n_states), dtype=np.uint32)
-
-    freq_r = np.zeros(
-        (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
-        dtype=np.uint32)
 
     print("Generating T and R. Please wait ...")
 

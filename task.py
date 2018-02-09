@@ -12,8 +12,8 @@ import agent
 import robot
 
 # Task Parameters:
-NAME = "Wander_12Ks_25a"
-DESCRIPTION = "Wander avoiding obstacles. 6 lasers. 5 ranges each (4 for rear). 25 actions "
+NAME = "Wander_1024s_9a"
+DESCRIPTION = "Wander avoiding obstacles. 5 lasers. 4 ranges each. 9 actions"
 ROBOT = "Pioneer 3dx with 8-point laser"
 ENVIRONMENT = "VREP_SIM: square 6x6m with obstacles"
 ENVIRONMENT_DETAIL = "SpeedX3. Threaded Render. Sens:Buffer, Act:Streaming"
@@ -35,16 +35,15 @@ RANGE_DAMAGE = 0.05  # m
 # "X": (0, 2, 4)    3 ranges: s(X)=0 if X<=2, =1 if X<4, =2 if X>4
 # For multiple linear intervals we suggest np.linspace
 INPUT_VARIABLES = {
-    "laser_front": np.linspace(0, RANGE_OBSTACLES, 5),
-    "laser_front_left": np.linspace(0, RANGE_OBSTACLES, 5),
-    "laser_left": np.linspace(0, RANGE_OBSTACLES, 5),
-    "laser_right": np.linspace(0, RANGE_OBSTACLES, 5),
-    "laser_front_right": np.linspace(0, RANGE_OBSTACLES, 5),
-    "laser_rear": np.linspace(0, RANGE_OBSTACLES, 4)
+    "laser_front": np.linspace(0, RANGE_OBSTACLES, 4),
+    "laser_front_left": np.linspace(0, RANGE_OBSTACLES, 4),
+    "laser_left": np.linspace(0, RANGE_OBSTACLES, 4),
+    "laser_right": np.linspace(0, RANGE_OBSTACLES, 4),
+    "laser_front_right": np.linspace(0, RANGE_OBSTACLES, 4)
 }
 OUTPUT_VARIABLES = {
-    "left_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 5),
-    "right_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 5)
+    "left_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3),
+    "right_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3)
 }
 INITIAL_STATE = 0  # (usually overwritten by the fist observation)
 INITIAL_POLICY = 0
@@ -55,8 +54,8 @@ def execute_action(actuator):
     input: vector of actuator values: e.g. [2.0,-2.0] rad/s """
     assert len(actuator) == len(out_data), " Check output variables"
     v_left, v_right = actuator[0], actuator[1]
-    # backward action is replaced by double maximum speed
-    # actions with only one wheel backwards changed to no motion (duplicated)
+    # backward action is replaced by double speed
+    # 2 actions with only one wheel backwards changed to no motion (duplicated)
     if v_left < 0 and v_right < 0:
         v_left = v_right = MOTOR_SPEED * 2
     elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
@@ -79,7 +78,6 @@ def get_reward():  # abstract s,a,sp pointless here
     n_collisions = (int(distance_fl < RANGE_DAMAGE) +
                     int(distance_fr < RANGE_DAMAGE) +
                     int(distance_f < RANGE_DAMAGE))
-
     r = REWARDS[2]
     if n_collisions > 1:  # big penalty
         r = min(REWARDS)
@@ -87,6 +85,7 @@ def get_reward():  # abstract s,a,sp pointless here
         r = REWARDS[1]
     elif displacement > RANGE_DISPLACEMENT:
         r = max(REWARDS)
+
     return r
 
 
@@ -105,16 +104,16 @@ def setup():
     agent.setup_task()
 
 
-n_inputs = None
+n_inputs = int
 in_values = [None]
 in_names = [None]
-in_sizes = [None]
-n_states = None
+in_sizes = [int]
+n_states = int
 in_data = [None]
 
-n_outputs = None
+n_outputs = int
 out_values = [None]
 out_names = [None]
-out_sizes = [None]
-n_actions = None
+out_sizes = [int]
+n_actions = int
 out_data = [None]
