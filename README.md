@@ -8,12 +8,13 @@ Reference: *Towards a common implementation of reinforcement learning for multip
 
 
 ## Requirements
+
+Tested on Ubuntu 14.04, 16.04, and 18.04 (64 bits)
+
 * Python >= 3.4
 * numpy >= 1.11
 * matplotlib >= 1.5
-* tkinter   `sudo apt-get install python-tk`
-
-Tested on Ubuntu 14.04 and 16.04 (64 bits).
+* tkinter   `sudo apt install python-tk`
 
 ## Try RL-ROBOT:
 
@@ -23,7 +24,7 @@ Tested on Ubuntu 14.04 and 16.04 (64 bits).
 import exp
 import rlrobot
 
-exp.ENVIRONMENT_TYPE = "MODEL"
+exp.ENVIRONMENT_TYPE = "MODEL"   # "VREP" for V-REP simulation
 exp.TASK_ID = "wander_1k"
 exp.FILE_MODEL = exp.TASK_ID + "_model"
 
@@ -42,7 +43,7 @@ Full set of parameters available in `exp.py`.
 
 
 ## V-REP settings: 
-Tested version: V-REP PRO EDU V3.3.2
+Tested: V-REP PRO EDU V3.3.2 / V3.5.0
 
 ![Scenarios](images/scenarios.jpg)
 
@@ -57,11 +58,11 @@ Tested version: V-REP PRO EDU V3.3.2
 2. Activate threaded rendering (recommended):
     `system/usrset.txt -> threadedRenderingDuringSimulation = 1` 
 
-Recommended simulation settings for V-REP scenes (already set in the provide ones):
+Recommended simulation settings for V-REP scenes:
 
 * Simulation step time: 50 ms  (default) 
 * Real-Time Simulation: Enabled
 * Multiplication factor: 3.00 (required CPU >= i3 3110m)
 
  **Execute V-REP** 
- (`./vrep.sh on linux`). `File -> Open Scene -> (open any scene for RL-ROS)`  
+ (`./vrep.sh on linux`). `File -> Open Scene -> <RL-ROBOT path>/vrep_scenes` 
