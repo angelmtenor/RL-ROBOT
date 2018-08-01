@@ -55,12 +55,17 @@ def execute_action(actuator):
     input: vector of actuator values: e.g. [2.0,-2.0] rad/s """
     assert len(actuator) == len(out_data), " Check output variables"
     v_left, v_right = actuator[0], actuator[1]
-    # backward action is replaced by double maximum speed
-    # actions with only one wheel backwards changed to no motion (duplicated)
+
+    # Two changes were made to improve the learning process:
+
+    #   1- backward movement replaced by forward movement at double speed 
     if v_left < 0 and v_right < 0:
         v_left = v_right = MOTOR_SPEED * 2
+
+    #   2- One wheel stopped and the other moving backward replaced by no motion
     elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
+        
     robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
 
 
