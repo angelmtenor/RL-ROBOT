@@ -1,3 +1,2 @@
-matplotlib==2.0.2
-numpy==1.12.1
-brewer2mpl==1.4.1
+matplotlib
+numpy

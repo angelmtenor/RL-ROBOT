@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -28,7 +27,7 @@ initiated = False
 
 
 def setup():
-    """ Initializes QBIASSR """
+    """Initializes QBIASSR"""
     global control_sequence, rewards_sequence, comb, mix, initiated
     # size_sequence = size of eli queue: n < log(threshold) / log(gamma*lambda)
     threshold = 0.01
@@ -47,15 +46,14 @@ def setup():
     # Create mix[s], index[s], subrow[s]
     n_inputs = task.n_inputs
     n_states = task.n_states
-    comb = np.array(
-        list(combinations(range(n_inputs), n_inputs - 1)), dtype=np.int16)
+    comb = np.array(list(combinations(range(n_inputs), n_inputs - 1)), dtype=np.int16)
     mix = np.full([n_states, n_inputs, n_states], -1, dtype=np.int)
     try:
         index = np.full(([n_states, n_inputs, n_states]), -1, dtype=np.int)
     except MemoryError:
-        mem = (n_states **2) * n_inputs * np.dtype(np.int).itemsize / (2**20)
-        print( "There is Not Enough Memory. Needed {:.1f} GB.".format(mem))
-        print( "Please, select another task or reduce the number of states.")
+        mem = (n_states**2) * n_inputs * np.dtype(np.int).itemsize / (2**20)
+        print(f"There is Not Enough Memory. Needed {mem:.1f} GB.")
+        print("Please, select another task or reduce the number of states.")
         exit()
 
     for s in range(n_states):
@@ -67,12 +65,12 @@ def setup():
                 index[s, i, k] = agent.VAR[i, j, k]
         for idx, item in enumerate(comb):
             matches = reduce(np.intersect1d, (index[s, item]))
-            mix[s, idx, 0:len(matches)] = matches
+            mix[s, idx, 0 : len(matches)] = matches
     initiated = True
 
 
 def custom_softmax(input_array, temp):
-    """ Softmax Boltzmann action selection given a vector and temperature """
+    """Softmax Boltzmann action selection given a vector and temperature"""
     selected_action = -1
 
     # 1: Get the probabilities
@@ -96,7 +94,7 @@ def custom_softmax(input_array, temp):
 
 
 def select_biased_action(s):
-    """ Select an action 'a' given state 's' by QBIASSR """
+    """Select an action 'a' given state 's' by QBIASSR"""
     assert initiated, "QBIASSR not initiated! setup() must be called previously"
 
     n_actions = task.n_actions
@@ -123,8 +121,8 @@ def select_biased_action(s):
 
 
 def low_reward_loop_evasion(s):
-    """ Increase the temperature if the agent is stuck in a sequence of states
-    with negative average reward """
+    """Increase the temperature if the agent is stuck in a sequence of states
+    with negative average reward"""
     global temperature
     global control_sequence
     global rewards_sequence
@@ -136,7 +134,7 @@ def low_reward_loop_evasion(s):
         temperature = DEFAULT_TEMPERATURE
         return
 
-    control_sequence = lp.sasr_step[lp.step - size_sequence:lp.step, 0]
+    control_sequence = lp.sasr_step[lp.step - size_sequence : lp.step, 0]
     # different state reached:
     if s not in control_sequence:
         temperature = DEFAULT_TEMPERATURE
@@ -150,7 +148,7 @@ def low_reward_loop_evasion(s):
         return
 
     # average reward positive:
-    rewards_sequence = lp.sasr_step[lp.step - size_sequence:lp.step, 3]
+    rewards_sequence = lp.sasr_step[lp.step - size_sequence : lp.step, 3]
     if np.average(rewards_sequence) > 0:
         temperature = DEFAULT_TEMPERATURE
         return

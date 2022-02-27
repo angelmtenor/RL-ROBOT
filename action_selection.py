@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -26,7 +25,7 @@ initiated = False
 
 
 def setup():
-    """ Initialize QBIASSR if needed """
+    """Initialize QBIASSR if needed"""
     global initiated
     if exp.ACTION_STRATEGY == "QBIASSR":
         action_qbiassr.setup()
@@ -34,7 +33,7 @@ def setup():
 
 
 def execute(s):
-    """ From state s select an action a """
+    """From state s select an action a"""
 
     if exp.TEACH_THE_ROBOT:
         print("Warning: Controlling the robot for teaching not implemented")
@@ -75,20 +74,20 @@ def execute(s):
 
 
 def exploit_policy(s):
-    """ Exploit the action a given an state s according to the Policy """
+    """Exploit the action a given an state s according to the Policy"""
     selected_action = lp.policy[s]
     return selected_action
 
 
 def random_action():
-    """ Select a random action a (uniform distribution) """
+    """Select a random action a (uniform distribution)"""
     # random.seed()
     selected_action = random.randint(0, task.n_actions - 1)
     return selected_action
 
 
 def egreedy(s, e):  # if e = 0.3_: 30% exploration
-    """ Select an action a given a state s based on egreedy exploration """
+    """Select an action a given a state s based on egreedy exploration"""
     # random.seed()
     if random.random() < e:
         selected_action = random_action()
@@ -98,8 +97,8 @@ def egreedy(s, e):  # if e = 0.3_: 30% exploration
 
 
 def egreedy_least_explored(s, e, least):
-    """ Select an action a given a state s based on egreedy exploration
-        improving the probability of selecting the least explored action  """
+    """Select an action a given a state s based on egreedy exploration
+    improving the probability of selecting the least explored action"""
     # random.seed()
     if random.random() < e:
         if random.random() < least:
@@ -117,7 +116,7 @@ def egreedy_least_explored(s, e, least):
 
 
 def softmax(s):
-    """ Select an action a given a state s based on Boltzmann exploration """
+    """Select an action a given a state s based on Boltzmann exploration"""
     selected_action = -1
     # 1: Get the probabilities
     pa = np.zeros(task.n_actions)

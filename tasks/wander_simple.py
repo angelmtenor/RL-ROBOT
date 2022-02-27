@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -36,19 +35,19 @@ RANGE_DAMAGE = 0.05  # m
 # For multiple linear intervals we suggest np.linspace
 INPUT_VARIABLES = {
     "laser_front_left": (0, RANGE_OBSTACLES),
-    "laser_front_right": (0, RANGE_OBSTACLES)
+    "laser_front_right": (0, RANGE_OBSTACLES),
 }
 OUTPUT_VARIABLES = {
     "left_wheel": (-MOTOR_SPEED, MOTOR_SPEED),
-    "right_wheel": (-MOTOR_SPEED, MOTOR_SPEED)
+    "right_wheel": (-MOTOR_SPEED, MOTOR_SPEED),
 }
 INITIAL_STATE = 0  # (usually overwritten by the fist observation)
 INITIAL_POLICY = 0
 
 
 def execute_action(actuator):  # two differential drive wheels template
-    """ Send the commands to the actuators of the robot.
-    input: vector of actuator values: e.g. [2.0,-2.0] rad/s """
+    """Send the commands to the actuators of the robot.
+    input: vector of actuator values: e.g. [2.0,-2.0] rad/s"""
     assert len(actuator) == len(out_data), " Check output variables"
     # backward action is replaced by no motion:
     v_left, v_right = actuator[0], actuator[1]
@@ -63,7 +62,7 @@ REWARDS = np.array([-10.0, -2.0, -0.02, 10.0])
 
 
 def get_reward():  # abstract s,a,sp pointless here
-    """ Return the reward from s,a,sp or the environment (recommended)"""
+    """Return the reward from s,a,sp or the environment (recommended)"""
     # Sensors values already updated in robot.py when the state was observed
     distance_fl = robot.sensor["laser_front_left"]
     distance_fr = robot.sensor["laser_front_right"]
@@ -81,8 +80,8 @@ def get_reward():  # abstract s,a,sp pointless here
 
 # ------------------------------------------------------------------------------
 def get_input_data():  # -- no modification needed --
-    """ Ask for sensory data to the robot and returns a vector with the values.
-    Relate Input Variables with robot sensors """
+    """Ask for sensory data to the robot and returns a vector with the values.
+    Relate Input Variables with robot sensors"""
     global in_data
     for idx, item in enumerate(in_names):
         in_data[idx] = robot.sensor[item]
@@ -90,7 +89,7 @@ def get_input_data():  # -- no modification needed --
 
 
 def setup():
-    """ task module setup is performed in agent """
+    """task module setup is performed in agent"""
     agent.setup_task()
 
 

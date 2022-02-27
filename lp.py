@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -56,7 +55,7 @@ initial_step_time = step_time  # auxiliary
 
 
 def setup():
-    """ Create module variables """
+    """Create module variables"""
     global step_time, step, s, sp, a, ap, r, alpha, delta, q, v, policy, q_count
     global t_sas, r_sas, elapsed_time, actual_step_time
     global final_average_reward, ave_v_step, ave_r_step, sasr_step, q_limit, s0
@@ -72,6 +71,7 @@ def setup():
     # Get initial state:
     if exp.LEARN_FROM_MODEL:
         import model
+
         s = int(model.s0)
     else:
         s = agent.observe_state()
@@ -107,9 +107,11 @@ def setup():
     #  q_limit = max(TASK.REWARDS)/(1-EXP.GAMMA)
 
     if q_limit != 100:
-        print("q_limit = ",
-              str(q_limit),
-              ". Softmax regression will be normalized as q_limit = 100")
+        print(
+            "q_limit = ",
+            str(q_limit),
+            ". Softmax regression will be normalized as q_limit = 100",
+        )
         time.sleep(2)
 
     initiated = True
@@ -117,7 +119,7 @@ def setup():
 
 
 def run():
-    """ Execute the learning Process"""
+    """Execute the learning Process"""
     global step, s, sp, a, ap, r, alpha
     global q, v, policy, q_count
     global t_sas, r_sas
@@ -125,8 +127,9 @@ def run():
     global elapsed_time, actual_step_time
     global final_average_reward
 
-    assert initiated, ("learning process not initiated! setup() "
-                       "must be previously called")
+    assert initiated, (
+        "learning process not initiated! setup() " "must be previously called"
+    )
     mark = time.time()
 
     # Start learning process: -----------------------------
@@ -173,7 +176,7 @@ def run():
     # End of learning process ----------------------
 
     final_average_reward = ave_r_step[step]
-    elapsed_time = (time.time() - mark)
+    elapsed_time = time.time() - mark
     actual_step_time = elapsed_time / (step + 1)
 
     show.process_summary()

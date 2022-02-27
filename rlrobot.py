@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #   +-----------------------------------+-----------------------------------+
 #   |                                 RL-ROBOT                              |
 #   |                                                                       |
@@ -36,8 +35,9 @@ results_path = "results/"
 
 
 def run():
-    """ Perform experiments: setups, executions, save results """
+    """Perform experiments: setups, executions, save results"""
     import sys
+
     if sys.version_info[0] < 3:
         sys.exit("Sorry, Python 3 required")
 
@@ -46,18 +46,17 @@ def run():
     # copy the selected taskfile to speed up the execution:
     try:
         copyfile("tasks/" + exp.TASK_ID + ".py", "task.py")
-    except IOError:
-        sys.exit("Task " + exp.TASK_ID +
-                 " not found. Please check exp.TASK_ID")
-    import task
-    import robot
+    except OSError:
+        sys.exit("Task " + exp.TASK_ID + " not found. Please check exp.TASK_ID")
     import lp
-    import show
+    import robot
     import save
+    import show
+    import task
 
     task.setup()
 
-    caption = (exp.TASK_ID + "_" + exp.ALGORITHM + "_" + exp.ACTION_STRATEGY)
+    caption = exp.TASK_ID + "_" + exp.ALGORITHM + "_" + exp.ACTION_STRATEGY
     if exp.SUFFIX:
         caption += "_" + exp.SUFFIX
 
@@ -75,6 +74,7 @@ def run():
 
     if exp.LEARN_FROM_MODEL:
         import model
+
         file_model = tasks_path + exp.FILE_MODEL + "/" + exp.FILE_MODEL
         model.load(file_model, exp.N_EPISODES_MODEL)
     else:
@@ -163,14 +163,14 @@ def run():
 
 # ------------------------------------------------------------------------------
 def signal_handler(sig, _):
-    """ capture Ctrl-C event and exists"""
-    sys.exit('\n Process interrupted (signal ' + str(sig) + ')')
+    """capture Ctrl-C event and exists"""
+    sys.exit("\n Process interrupted (signal " + str(sig) + ")")
 
 
 # capture SIGINT when ROS threads are present:
 signal.signal(signal.SIGINT, signal_handler)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if exp.ENVIRONMENT_TYPE == "ROS":
         print(" \n linking ROS ... ")
         import rl_ros

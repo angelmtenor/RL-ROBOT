@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -19,12 +18,12 @@ CAPTION = "Q-learning"
 
 
 def setup():
-    """ Setup algorithm """
+    """Setup algorithm"""
     pass  # no needed here
 
 
 def execute():
-    """ Execute the learning algorithm """
+    """Execute the learning algorithm"""
     s = lp.s
     alpha = lp.alpha
     q = lp.q

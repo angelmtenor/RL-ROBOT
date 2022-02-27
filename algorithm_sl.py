@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -26,7 +25,7 @@ initiated = False
 
 
 def setup():
-    """ Initializes global variables """
+    """Initializes global variables"""
     global eligibility, eli_queue, initiated
 
     eligibility = np.zeros((task.n_states, task.n_actions), dtype=np.float64)
@@ -47,7 +46,7 @@ def setup():
 
 
 def execute():
-    """ Execute the learning algorithm """
+    """Execute the learning algorithm"""
 
     global eligibility
 

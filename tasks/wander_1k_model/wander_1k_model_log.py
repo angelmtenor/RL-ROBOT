@@ -1,14 +1,14 @@
 """ EXPERIMENT LOG """
 
 # PARAMETERS
-NAME = 'Wander_Maze6x6_1024s9a'
-DESCRIPTION = 'Wander avoiding obstacles. 4 Distance Ranges with 5 Lasers'
-ALGORITHM_NAME = 'LE_TOSL'
-EXPLORATION_STRATEGY = 'SOFT'
-ROBOT = 'Pioneer 3dx with 8-point laser'
-ENVIRONMENT = 'VREP_SIM: maze 6x6'
-ENVIRONMENT_DETAIL = 'SpeedX3. Threaded Render. Sens:Buffer, Act:Streaming'
-AGENT_ELEMENTS = ['MOBILE_BASE', 'DISTANCE_SENSOR']
+NAME = "Wander_Maze6x6_1024s9a"
+DESCRIPTION = "Wander avoiding obstacles. 4 Distance Ranges with 5 Lasers"
+ALGORITHM_NAME = "LE_TOSL"
+EXPLORATION_STRATEGY = "SOFT"
+ROBOT = "Pioneer 3dx with 8-point laser"
+ENVIRONMENT = "VREP_SIM: maze 6x6"
+ENVIRONMENT_DETAIL = "SpeedX3. Threaded Render. Sens:Buffer, Act:Streaming"
+AGENT_ELEMENTS = ["MOBILE_BASE", "DISTANCE_SENSOR"]
 ENV_ELEMENTS = []
 N_STATES = 1024
 N_ACTIONS = 9
@@ -22,7 +22,7 @@ N_REPETITIONS = 1
 N_EPISODES = 1
 
 LEARN_FROM_MODEL = False
-FILE_MODEL = ''
+FILE_MODEL = ""
 
 s0 = 1023
 

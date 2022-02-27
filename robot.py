@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -13,7 +12,7 @@ import numpy as np
 
 import exp
 
-link_dict = {'ROS': 'rl_ros', 'VREP': 'rl_vrep', 'MODEL': 'rl_vrep'}
+link_dict = {"ROS": "rl_ros", "VREP": "rl_vrep", "MODEL": "rl_vrep"}
 try:
     link_module = link_dict[exp.ENVIRONMENT_TYPE]
 except KeyError:
@@ -54,7 +53,7 @@ sensor = {}
 
 
 def setup(agent_elem, environment_elem):
-    """ initialize robot """
+    """initialize robot"""
     global AGENT_ELEMENTS, ENV_ELEMENTS
     global mobilebase_pose2d, last_mobilebase_pose2d, mobilebase_displacement2d
     global dist_obstacle
@@ -101,7 +100,7 @@ def setup(agent_elem, environment_elem):
 
 
 def update():
-    """ update robot & environment state (sensors, locations...) """
+    """update robot & environment state (sensors, locations...)"""
     global mobilebase_pose2d, last_mobilebase_pose2d, mobilebase_displacement2d
     global dist_obstacle
     global gripper_pose3d, last_gripper_pose3d, gripper_displacement3d
@@ -119,14 +118,14 @@ def update():
     if "MOBILE_BASE" in AGENT_ELEMENTS:
         last_mobilebase_pose2d = mobilebase_pose2d
         mobilebase_pose2d = get_mobilebase_pose2d()
-        mobilebase_displacement2d = distance2d(mobilebase_pose2d,
-                                               last_mobilebase_pose2d)
+        mobilebase_displacement2d = distance2d(
+            mobilebase_pose2d, last_mobilebase_pose2d
+        )
 
     if "ARM" in AGENT_ELEMENTS:
         last_gripper_pose3d = gripper_pose3d
         gripper_pose3d = link.get_gripper_pose3d()
-        gripper_displacement3d = distance3d(gripper_pose3d,
-                                            last_gripper_pose3d)
+        gripper_displacement3d = distance3d(gripper_pose3d, last_gripper_pose3d)
 
     if "GOAL_OBJECT" in ENV_ELEMENTS:
         last_goal_pose3d = link.get_goal_pose_3d()
@@ -135,17 +134,18 @@ def update():
 
         if "MOBILE_BASE" in AGENT_ELEMENTS:
             last_distance_mobilebase_goal = distance_mobilebase_goal
-            distance_mobilebase_goal = distance2d(goal_pose3d,
-                                                  mobilebase_pose2d)
+            distance_mobilebase_goal = distance2d(goal_pose3d, mobilebase_pose2d)
             mobilebase_goal_displacement2d = (
-                distance_mobilebase_goal - last_distance_mobilebase_goal)
+                distance_mobilebase_goal - last_distance_mobilebase_goal
+            )
             # Negative: the mobilebase is getting closer
 
         if "ARM" in AGENT_ELEMENTS:
             last_distance_gripper_goal = distance_gripper_goal
             distance_gripper_goal = distance3d(goal_pose3d, gripper_pose3d)
             gripper_goal_displacement3d = (
-                distance_gripper_goal - last_distance_gripper_goal)
+                distance_gripper_goal - last_distance_gripper_goal
+            )
             # Negative: the arm is getting closer
 
     sensor["mobile_x"] = mobilebase_pose2d[0]
@@ -170,19 +170,19 @@ def update():
 
 
 def move_wheels(left_wheel, right_wheel):
-    """ move base wheels (inputs: rad/s) """
+    """move base wheels (inputs: rad/s)"""
     link.move_wheels(left_wheel, right_wheel)
     return
 
 
 def stop_motion():
-    """ stop the mobilebase """
+    """stop the mobilebase"""
     link.stop_motion()
     return
 
 
 def move_full_arm(arm, biceps, forearm):
-    """ move robotic arm """
+    """move robotic arm"""
     link.move_arm(arm)
     link.move_biceps(biceps)
     link.move_forearm(forearm)
@@ -190,70 +190,71 @@ def move_full_arm(arm, biceps, forearm):
 
 
 def get_distance_obstacle():
-    """ return distances to objects measured by laser """
+    """return distances to objects measured by laser"""
     di = link.get_distance_obstacle()
     return di
 
 
 def get_mobilebase_pose2d():
-    """ return 2d pose of the mobilebase (x,y,theta) """
+    """return 2d pose of the mobilebase (x,y,theta)"""
     po = link.get_mobilebase_pose2d()
     return po
 
 
 def get_gripper_pose3d():
-    """ return the position of the gripper:  [ x(m), y(m), z(m) ] """
+    """return the position of the gripper:  [ x(m), y(m), z(m) ]"""
     po = link.get_gripper_pose3d()
     return po
 
 
 def get_goal_pose3d():
-    """ return the position of the goal object:  [ x(m), y(m), z(m) ] """
+    """return the position of the goal object:  [ x(m), y(m), z(m) ]"""
     po = link.get_goal_pose_3d()
     return po
 
 
 def distance2d(pose_a, pose_b):
-    """ get distance 2d (x,y axis) between 2 poses """
+    """get distance 2d (x,y axis) between 2 poses"""
     delta_pose2d = abs(pose_a - pose_b)
-    displacement2d = math.sqrt(delta_pose2d[0]**2 + delta_pose2d[1]**2)
+    displacement2d = math.sqrt(delta_pose2d[0] ** 2 + delta_pose2d[1] ** 2)
     return displacement2d
 
 
 def distance3d(pose_a, pose_b):
-    """ get distance 3d between 2 poses """
+    """get distance 3d between 2 poses"""
 
     delta_pose3d = abs(pose_a - pose_b)
-    displacement3d = math.sqrt(delta_pose3d[0]**2 + delta_pose3d[1]**2 +
-                               delta_pose3d[2]**2)
+    displacement3d = math.sqrt(
+        delta_pose3d[0] ** 2 + delta_pose3d[1] ** 2 + delta_pose3d[2] ** 2
+    )
     return displacement3d
 
 
 def start():
-    """ Start robot """
+    """Start robot"""
     link.start()
     return
 
 
 def stop():
-    """ stop robot """
+    """stop robot"""
     link.stop()
     return
 
 
 def setup_devices():
-    """ setup robot's devices """
+    """setup robot's devices"""
     link.setup_devices()
     return
 
 
 def connect():
-    """ connect to the robot """
+    """connect to the robot"""
     link.connect()
     return
 
 
 def disconnect():
-    """ disconnect from the robot """
+    """disconnect from the robot"""
     link.disconnect()
     return

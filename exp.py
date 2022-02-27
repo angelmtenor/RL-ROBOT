@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -61,7 +60,7 @@ TAUGHT_SASR = False
 
 
 def check():
-    """ Check experiment parameters """
+    """Check experiment parameters"""
     global N_STEPS, LEARN_FROM_MODEL, TEACHING_STEPS, TEACHING_PROCESS
     global EPISODIC, DISPLAY_STEP, TAUGHT_SASR
 
@@ -76,8 +75,9 @@ def check():
     if ENVIRONMENT_TYPE == "MODEL":
         LEARN_FROM_MODEL = True
 
-    assert (not (TEACH_THE_ROBOT and LEARN_FROM_TEACHING)), (
-        "\n Teaching and Learning at the same time \n")
+    assert not (
+        TEACH_THE_ROBOT and LEARN_FROM_TEACHING
+    ), "\n Teaching and Learning at the same time \n"
 
     if LEARN_FROM_TEACHING:
         TEACHING_PROCESS = True

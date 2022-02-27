@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -24,31 +23,32 @@ freq_r = np.empty(0)
 
 
 def generate_t_and_r(datafile_model, n_episodes_model=1):
-    """ generate Transition and Reward functions from a 'SASR_step' datafile """
+    """generate Transition and Reward functions from a 'SASR_step' datafile"""
 
     global t, r, s0, freq_t, freq_r
-    
+
     try:
-        t = np.zeros(
-            (task.n_states, task.n_actions, task.n_states), dtype=np.float16)
+        t = np.zeros((task.n_states, task.n_actions, task.n_states), dtype=np.float16)
 
         r = np.zeros(
             (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
-            dtype=np.float16)
+            dtype=np.float16,
+        )
 
         freq_t = np.zeros(
-            (task.n_states, task.n_actions, task.n_states), dtype=np.uint32)
+            (task.n_states, task.n_actions, task.n_states), dtype=np.uint32
+        )
 
         freq_r = np.zeros(
             (task.n_states, task.n_actions, task.n_states, task.REWARDS.size),
-            dtype=np.uint32)
+            dtype=np.uint32,
+        )
 
     except MemoryError:
         # mem = (task.n_states **2) * task.n_actions * np.dtype(np.float16).itemsize / (2**20)
-        print( "There is Not Enough Memory to generate the Markovian model" )
-        print( "Please, select another task or reduce the number of states.")
+        print("There is Not Enough Memory to generate the Markovian model")
+        print("Please, select another task or reduce the number of states.")
         exit()
-
 
     print("Generating T and R. Please wait ...")
 
@@ -58,8 +58,9 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
             filename = datafile_model + "_ep_" + str(epi) + "_SASR_step"
         try:
             data = np.load(filename)
-        except IOError:
+        except OSError:
             import sys
+
             sys.exit("Error: " + filename + " not found")
 
         s0 = int(data[0, 0])
@@ -82,7 +83,7 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
                 if partial_sum_t == 0:
                     t[s, a, sp] = 1.0 / task.n_states
                 else:
-                    t[s, a, sp] = (freq_t[s, a, sp] / partial_sum_t)
+                    t[s, a, sp] = freq_t[s, a, sp] / partial_sum_t
 
                 # Reward function:
                 partial_sum_r = np.sum(freq_r[s, a, sp, :])  # np.sum(Freq_R,3)
@@ -90,13 +91,12 @@ def generate_t_and_r(datafile_model, n_episodes_model=1):
                     if partial_sum_r == 0:
                         r[s, a, sp, ty_re] = 1.0 / task.REWARDS.size
                     else:
-                        r[s, a, sp, ty_re] = (
-                            freq_r[s, a, sp, ty_re] / partial_sum_r)
+                        r[s, a, sp, ty_re] = freq_r[s, a, sp, ty_re] / partial_sum_r
     return
 
 
 def get_sp(s, a):
-    """ return reached state from model """
+    """return reached state from model"""
     sp = -1
     # random.seed()
     rd = random.random()
@@ -112,7 +112,7 @@ def get_sp(s, a):
 
 
 def get_r(s, a, sp):
-    """ return obtained reward from model """
+    """return obtained reward from model"""
     reward = 0
     # random.seed()
     rd = random.random()
@@ -126,16 +126,16 @@ def get_r(s, a, sp):
 
 
 def load(filename, n_episodes_model=1):
-    """ Load model (T,R) from <filename>_model.npz. Update t, r, s0
-    if no model is available, generate and save from SASR_step file """
+    """Load model (T,R) from <filename>_model.npz. Update t, r, s0
+    if no model is available, generate and save from SASR_step file"""
     global t, r, s0
     file_model = filename + ".npz"
     if os.path.isfile(file_model):
         print("Model file found")
         with np.load(file_model) as fm:
-            t = fm['T']
-            r = fm['R']
-            s0 = fm['s0']
+            t = fm["T"]
+            r = fm["R"]
+            s0 = fm["s0"]
     else:
         print("Model file not found")
         generate_t_and_r(filename, n_episodes_model)  # create t, r, s0

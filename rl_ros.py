@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -9,17 +8,17 @@
 import copy
 import sys
 import time
-from threading import Thread, RLock
+from threading import RLock, Thread
 
 import numpy as np
 
 try:
     import rospy
+    from geometry_msgs.msg import Twist
     # from std_msgs.msg import String
     # from my_python.srv import *
     from nav_msgs.msg import Odometry
     from sensor_msgs.msg import LaserScan
-    from geometry_msgs.msg import Twist
     from std_srvs.srv import Empty
 except ImportError:
     rospy = None
@@ -27,8 +26,10 @@ except ImportError:
     LaserScan = None
     Twist = None
     Empty = None
-    sys.exit("\n Please configure your ROS Environment "
-             "e.g: $ . ~/catkin_ws/devel/setup.bash")
+    sys.exit(
+        "\n Please configure your ROS Environment "
+        "e.g: $ . ~/catkin_ws/devel/setup.bash"
+    )
 
 NODE_NAME = "rl_ros"
 
@@ -59,7 +60,7 @@ mutex_twist = RLock()
 
 
 def setup():
-    """ Setup ROS node. Create listener and talker threads """
+    """Setup ROS node. Create listener and talker threads"""
     global pub_cmd_vel
     global srv_reset_positions
 
@@ -67,12 +68,11 @@ def setup():
 
     rospy.init_node(NODE_NAME, anonymous=True)
     # ToDo: Change to 'odom' in ROS launch for Giraff:
-    rospy.Subscriber('odom_giraff', Odometry, callback_odom)
-    rospy.Subscriber('laser_scan', LaserScan, callback_base_scan)
-    pub_cmd_vel = rospy.Publisher(
-        'cmd_vel', Twist, queue_size=1, tcp_nodelay=True)
+    rospy.Subscriber("odom_giraff", Odometry, callback_odom)
+    rospy.Subscriber("laser_scan", LaserScan, callback_base_scan)
+    pub_cmd_vel = rospy.Publisher("cmd_vel", Twist, queue_size=1, tcp_nodelay=True)
 
-    srv_reset_positions = rospy.ServiceProxy('reset_positions', Empty)
+    srv_reset_positions = rospy.ServiceProxy("reset_positions", Empty)
 
     thread_listener = Thread(target=listener, args=[])
     thread_talker = Thread(target=talker, args=[])
@@ -84,7 +84,7 @@ def setup():
 
 
 def callback_odom(data):
-    """ callback from odometry subscribed topic. Update mobilebase_pose2d """
+    """callback from odometry subscribed topic. Update mobilebase_pose2d"""
     global mobilebase_pose2d
     mutex_odom.acquire()
     mobilebase_pose2d[0] = data.pose.pose.position.x
@@ -95,7 +95,7 @@ def callback_odom(data):
 
 
 def callback_base_scan(data):
-    """ callback from odometry subscribed topic. Update distance_obstacle """
+    """callback from odometry subscribed topic. Update distance_obstacle"""
     global distance_obstacle
     laser_data = data.ranges
     n_data = len(laser_data)
@@ -117,13 +117,13 @@ def callback_base_scan(data):
 
 
 def listener():
-    """ Call rospy spin for subscribed topics"""
+    """Call rospy spin for subscribed topics"""
     rospy.spin()
     return
 
 
 def talker():
-    """ Publish ROS data """
+    """Publish ROS data"""
     rate = rospy.Rate(10)  # 10hz
     while not rospy.is_shutdown():
         mutex_twist.acquire()
@@ -134,14 +134,14 @@ def talker():
 
 
 def finish():
-    """ Close ROS node """
+    """Close ROS node"""
     print("\nFinishing ROS Node \n")
     rospy.signal_shutdown("Finished from RL-ROBOT")
     return
 
 
 def move_wheels(left_speed, right_speed):
-    """ Convert wheel speeds into (v,w) and update published speed values """
+    """Convert wheel speeds into (v,w) and update published speed values"""
     # rospy.init_node('listener', anonymous=True)
     v_speed, w_speed = wheel_to_vw_speed(left_speed, right_speed)
 
@@ -163,8 +163,8 @@ def move_wheels(left_speed, right_speed):
 
 
 def wheel_to_vw_speed(left_speed, right_speed):
-    """  Return v,w speeds of the robot from
-    left, right wheel speeds in rad/s """
+    """Return v,w speeds of the robot from
+    left, right wheel speeds in rad/s"""
     d = 0.15  # wheels radius of Giraff
     s = 0.46  # separation between wheels of Giraff
     v_left = left_speed * d / 2
@@ -176,7 +176,7 @@ def wheel_to_vw_speed(left_speed, right_speed):
 
 
 def get_mobilebase_pose2d():
-    """ Returns the pose of the robot:  [ x(m), y(m), Theta(rad)  ] """
+    """Returns the pose of the robot:  [ x(m), y(m), Theta(rad)  ]"""
     mutex_odom.acquire()
     pos = mobilebase_pose2d
     mutex_odom.release()
@@ -185,7 +185,7 @@ def get_mobilebase_pose2d():
 
 
 def get_distance_obstacle():
-    """ Returns an array of distances measured by lasers (m) """
+    """Returns an array of distances measured by lasers (m)"""
     mutex_base_scan.acquire()
     dist = distance_obstacle
     mutex_base_scan.release()
@@ -194,41 +194,41 @@ def get_distance_obstacle():
 
 
 def stop_motion():
-    """ Stops robot motion """
+    """Stops robot motion"""
     move_wheels(0, 0)
 
 
 def setup_devices():
-    """ just for V-Rep Compatibility"""
+    """just for V-Rep Compatibility"""
     pass
 
 
 def connect():
-    """ just for V-Rep Compatibility"""
+    """just for V-Rep Compatibility"""
     return
 
 
 def disconnect():
-    """ just for V-Rep Compatibility"""
+    """just for V-Rep Compatibility"""
     return
 
 
 def start():
-    """ just for V-Rep Compatibility"""
+    """just for V-Rep Compatibility"""
     reset_robot()
     time.sleep(0.5)
     return
 
 
 def stop():
-    """ just for V-Rep Compatibility"""
+    """just for V-Rep Compatibility"""
     reset_robot()
     time.sleep(0.5)
     return
 
 
 def show_msg(message):
-    """ Print a message (ROS log) """
+    """Print a message (ROS log)"""
     rl_str = "rl_mapir: " + message
     print(rl_str)
     rospy.loginfo(rl_str)
@@ -236,8 +236,8 @@ def show_msg(message):
 
 
 def reset_robot():
-    """ Call to a Reset ROS service if available """
-    rospy.wait_for_service('reset_positions')
+    """Call to a Reset ROS service if available"""
+    rospy.wait_for_service("reset_positions")
     return
 
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -44,15 +43,15 @@ INPUT_VARIABLES = {
 OUTPUT_VARIABLES = {
     "arm": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3),
     "biceps": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3),
-    "forearm": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3)
+    "forearm": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 3),
 }
 INITIAL_STATE = 0  # (usually overwritten by the fist observation)
 INITIAL_POLICY = 0
 
 
 def execute_action(actuator):
-    """ Send the commands to the actuators of the robot.
-    input: vector of actuator values: e.g. [2.0,-2.0] rad/s """
+    """Send the commands to the actuators of the robot.
+    input: vector of actuator values: e.g. [2.0,-2.0] rad/s"""
     assert len(actuator) == len(out_data), " Check output variables"
     v_arm, v_biceps, v_forearm = actuator
     # (modify joints if necessary)
@@ -64,7 +63,7 @@ REWARDS = np.array([-1.0, -0.02, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0])
 
 
 def get_reward():  # abstract s,a,sp pointless here
-    """ Return the reward from s,a,sp or the environment (recommended)"""
+    """Return the reward from s,a,sp or the environment (recommended)"""
     # Sensors values already updated in robot.py when the state was observed
     distance_gripper_goal = robot.distance_gripper_goal
     displacement_gripper_goal = robot.gripper_goal_displacement3d
@@ -89,8 +88,8 @@ def get_reward():  # abstract s,a,sp pointless here
 
 # ------------------------------------------------------------------------------
 def get_input_data():  # -- no modification needed --
-    """ Ask for sensory data to the robot and returns a vector with the values.
-    Relate Input Variables with robot sensors """
+    """Ask for sensory data to the robot and returns a vector with the values.
+    Relate Input Variables with robot sensors"""
     global in_data
     for idx, item in enumerate(in_names):
         in_data[idx] = robot.sensor[item]
@@ -98,7 +97,7 @@ def get_input_data():  # -- no modification needed --
 
 
 def setup():
-    """ task module setup is performed in agent """
+    """task module setup is performed in agent"""
     agent.setup_task()
 
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -33,7 +32,7 @@ goal_reached = False
 
 
 def setup_task():
-    """ Task setup will be performed in the agent """
+    """Task setup will be performed in the agent"""
     global n_inputs, in_values, n_outputs, out_values, Vs, Va, VAR, cont_VAR
     global in_sizes, out_sizes, n_states, n_actions, initiated
 
@@ -87,12 +86,11 @@ def setup_task():
     task.n_actions = n_actions
     task.out_data = output_data
 
-    print("Task {} \t {} states \t {} actions".format(task.NAME, n_states,
-                                                      n_actions))
+    print(f"Task {task.NAME} \t {n_states} states \t {n_actions} actions")
 
 
 def setup():
-    """ Create the variables needed for this module """
+    """Create the variables needed for this module"""
     global Vs, Va, VAR, cont_VAR, initiated, goal_reached
 
     robot.setup(task.AGENT_ELEMENTS, task.ENV_ELEMENTS)
@@ -115,7 +113,7 @@ def setup():
 
 
 def observe_state():
-    """ Returns the reached state s' from robot """
+    """Returns the reached state s' from robot"""
     assert initiated, "agent not initiated! setup() must be previously executed"
 
     unwrapped_s = np.zeros(n_inputs)
@@ -123,10 +121,12 @@ def observe_state():
     # Special cases
     if exp.TEACHING_PROCESS:  # Observed states are already given
         from lp import step
+
         return exp.TAUGHT_SASR[step, 2]
     elif exp.LEARN_FROM_MODEL:
-        from lp import s, a
         import model
+        from lp import a, s
+
         return model.get_sp(s, a)  # return reached state s'
 
     robot.update()
@@ -144,25 +144,25 @@ def observe_state():
 
     state = wrap_state(unwrapped_s)
 
-    assert (0 <= state < n_states), ("Wrong state: ", str(state))
+    assert 0 <= state < n_states, ("Wrong state: ", str(state))
     return state
 
 
 def select_action(s):
-    """ Return action a by calling the action selection strategy """
+    """Return action a by calling the action selection strategy"""
     a = action_selection.execute(s)
     return a
 
 
 # ------------------------------------------------------------------------------
 def execute_action(a):
-    """ Execute action in robot """
+    """Execute action in robot"""
     # Special cases
     if exp.LEARN_FROM_MODEL:
         return
     elif exp.TEACHING_PROCESS and exp.SKIP_VIEW_TEACHING:
         return
-    assert (0 <= a < n_actions), ("Wrong action: ", str(a))
+    assert 0 <= a < n_actions, ("Wrong action: ", str(a))
 
     unwrapped_a = unwrap_action(a)
     actuator = np.zeros(n_outputs)
@@ -175,10 +175,11 @@ def execute_action(a):
 
 # ------------------------------------------------------------------------------
 def obtain_reward(s, a, sp):
-    """ Return the reward obtained """
+    """Return the reward obtained"""
     # Special cases
     if exp.TEACHING_PROCESS:
         from lp import step
+
         if step >= exp.TEACHING_STEPS:
             exp.TEACHING_PROCESS = False  # End of teaching
         else:
@@ -186,6 +187,7 @@ def obtain_reward(s, a, sp):
     if exp.LEARN_FROM_MODEL:
         # from lp import s, a, sp
         import model
+
         return model.get_r(s, a, sp)
 
     r = task.get_reward()  # (s,a, sp) arguments not needed here
@@ -194,21 +196,21 @@ def obtain_reward(s, a, sp):
 
 # ------------------------------------------------------------------------------
 def wrap_state(unw_s):
-    """ Compose the global state from an array of substates """
+    """Compose the global state from an array of substates"""
     s = unw_s[0]
     for i in range(1, n_inputs):
         pro = 1
         for j in range(0, i):
             pro *= in_sizes[j]
         s += pro * unw_s[i]
-    assert (0 <= s < n_states), ("Wrong state: ", str(s))
+    assert 0 <= s < n_states, ("Wrong state: ", str(s))
     return int(s)
 
 
 # ------------------------------------------------------------------------------
 def unwrap_state(s):
-    """ Return the array of substates from the global state s """
-    assert (0 <= s < n_states), ("Wrong state: ", str(s))
+    """Return the array of substates from the global state s"""
+    assert 0 <= s < n_states, ("Wrong state: ", str(s))
     unwrapped_s = np.zeros(n_inputs, dtype=np.int)
     aux = s
     for i in range(n_inputs - 1):
@@ -220,21 +222,21 @@ def unwrap_state(s):
 
 # ------------------------------------------------------------------------------
 def wrap_action(unw_a):
-    """ Compose the global action from an array of subactions """
+    """Compose the global action from an array of subactions"""
     a = unw_a[0]
     for i in range(1, n_outputs):
         pro = 1
         for j in range(0, i):
             pro *= out_sizes[j]
         a += pro * unw_a[i]
-    assert (0 <= a < n_actions), ("Wrong action: ", str(a))
+    assert 0 <= a < n_actions, ("Wrong action: ", str(a))
     return int(a)
 
 
 # ------------------------------------------------------------------------------
 def unwrap_action(a):
-    """ Return the array of subactions from the global action a """
-    assert (0 <= a < n_actions), ("Wrong action: ", str(a))
+    """Return the array of subactions from the global action a"""
+    assert 0 <= a < n_actions, ("Wrong action: ", str(a))
     unwrapped_a = np.zeros(n_outputs, dtype=np.int)
     aux = a
     for i in range(n_outputs - 1):
@@ -246,7 +248,7 @@ def unwrap_action(a):
 
 # ------------------------------------------------------------------------------
 def generate_vs():
-    """ Generate array of substates """
+    """Generate array of substates"""
     global Vs
     Vs = np.zeros([n_inputs, int(max(in_sizes))])
     for i in range(n_inputs):
@@ -256,7 +258,7 @@ def generate_vs():
 
 # ------------------------------------------------------------------------------
 def generate_va():
-    """ Generate array of subactions """
+    """Generate array of subactions"""
     global Va
     Va = np.zeros([n_outputs, int(max(out_sizes))])
 
@@ -267,7 +269,7 @@ def generate_va():
 
 # ------------------------------------------------------------------------------
 def generate_var():
-    """ Generate Variable Matrix (input, input_value, count) -> state """
+    """Generate Variable Matrix (input, input_value, count) -> state"""
     global VAR, cont_VAR
     VAR = np.full((n_inputs, int(max(in_sizes)), n_states), -1, dtype=np.int)
     cont_VAR = np.full((n_inputs, int(max(in_sizes))), 0, dtype=np.int)

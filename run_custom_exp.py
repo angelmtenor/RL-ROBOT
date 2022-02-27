@@ -15,8 +15,10 @@
 # rlrobot.run()
 
 import sys
+
 sys.modules[__name__].__dict__.clear()
-import exp, rlrobot
+import exp
+import rlrobot
 
 exp.ALGORITHM = "Q"
 exp.ACTION_STRATEGY = "softmax"

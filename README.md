@@ -4,8 +4,8 @@
 
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
  
-Reference: *Towards a common implementation of reinforcement learning for multiple robotics tasks*. [ScienceDirect(updated)](http://www.sciencedirect.com/science/article/pii/S0957417417307613) &nbsp; &nbsp; &nbsp; [Arxiv preprint](https://arxiv.org/abs/1702.06329)
-
+Reference: *Towards a common implementation of reinforcement learning for multiple robotics tasks*. &nbsp; [Arxiv preprint](https://arxiv.org/abs/1702.06329) &nbsp;&nbsp;
+[ScienceDirect](http://www.sciencedirect.com/science/article/pii/S0957417417307613) 
 
 ## Requirements
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #   +-----------------------------------------------+
 #   | RL-ROBOT. Reinforcement Learning for Robotics |
 #   | Angel Martinez-Tenor                          |
@@ -40,32 +39,32 @@ INPUT_VARIABLES = {
     "laser_left": np.linspace(0, RANGE_OBSTACLES, 4),
     "laser_right": np.linspace(0, RANGE_OBSTACLES, 4),
     "laser_front_right": np.linspace(0, RANGE_OBSTACLES, 4),
-    "laser_rear": np.linspace(0, RANGE_OBSTACLES, 4)
+    "laser_rear": np.linspace(0, RANGE_OBSTACLES, 4),
 }
 OUTPUT_VARIABLES = {
     "left_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 5),
-    "right_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 5)
+    "right_wheel": np.linspace(-MOTOR_SPEED, MOTOR_SPEED, 5),
 }
 INITIAL_STATE = 0  # (usually overwritten by the fist observation)
 INITIAL_POLICY = 0
 
 
 def execute_action(actuator):
-    """ Send the commands to the actuators of the robot.
-    input: vector of actuator values: e.g. [2.0,-2.0] rad/s """
+    """Send the commands to the actuators of the robot.
+    input: vector of actuator values: e.g. [2.0,-2.0] rad/s"""
     assert len(actuator) == len(out_data), " Check output variables"
     v_left, v_right = actuator[0], actuator[1]
 
     # Two changes were made to improve the learning process:
 
-    #   1- backward movement replaced by forward movement at double speed 
+    #   1- backward movement replaced by forward movement at double speed
     if v_left < 0 and v_right < 0:
         v_left = v_right = MOTOR_SPEED * 2
 
     #   2- One wheel stopped and the other moving backward replaced by no motion
     elif (v_left == 0 and v_right < 0) or (v_left < 0 and v_right == 0):
         v_left = v_right = 0
-        
+
     robot.move_wheels(v_left, v_right)  # left wheel, right_wheel speeds (rad/s)
 
 
@@ -74,16 +73,18 @@ REWARDS = np.array([-10.0, -2.0, -0.02, 10.0])
 
 
 def get_reward():  # abstract s,a,sp pointless here
-    """ Return the reward from s,a,sp or the environment (recommended)"""
+    """Return the reward from s,a,sp or the environment (recommended)"""
     # Sensors values already updated in robot.py when the state was observed
     distance_fl = robot.sensor["laser_front_left"]
     distance_fr = robot.sensor["laser_front_right"]
     distance_f = robot.sensor["laser_front"]
     displacement = robot.mobilebase_displacement2d
 
-    n_collisions = (int(distance_fl < RANGE_DAMAGE) +
-                    int(distance_fr < RANGE_DAMAGE) +
-                    int(distance_f < RANGE_DAMAGE))
+    n_collisions = (
+        int(distance_fl < RANGE_DAMAGE)
+        + int(distance_fr < RANGE_DAMAGE)
+        + int(distance_f < RANGE_DAMAGE)
+    )
 
     r = REWARDS[2]
     if n_collisions > 1:  # big penalty
@@ -97,8 +98,8 @@ def get_reward():  # abstract s,a,sp pointless here
 
 # ------------------------------------------------------------------------------
 def get_input_data():  # -- no modification needed --
-    """ Ask for sensory data to the robot and returns a vector with the values.
-    Relate Input Variables with robot sensors """
+    """Ask for sensory data to the robot and returns a vector with the values.
+    Relate Input Variables with robot sensors"""
     global in_data
     for idx, item in enumerate(in_names):
         in_data[idx] = robot.sensor[item]
@@ -106,7 +107,7 @@ def get_input_data():  # -- no modification needed --
 
 
 def setup():
-    """ task module setup is performed in agent """
+    """task module setup is performed in agent"""
     agent.setup_task()
 
 
