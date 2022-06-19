@@ -1,25 +1,17 @@
-# import sys
-# sys.modules[__name__].__dict__.clear()
-# import exp, rlrobot
-
-# exp.ALGORITHM = "TOSL"
-# exp.ACTION_STRATEGY = "QBIASSR"
-# rlrobot.run()
-
-# import sys
-# sys.modules[__name__].__dict__.clear()
-# import exp, rlrobot
-
-# exp.ALGORITHM = "TOSL"
-# exp.ACTION_STRATEGY = "softmax"
-# rlrobot.run()
-
-import sys
-
-sys.modules[__name__].__dict__.clear()
 import exp
 import rlrobot
 
-exp.ALGORITHM = "Q"
-exp.ACTION_STRATEGY = "softmax"
+exp.ENVIRONMENT_TYPE = "MODEL"   # "VREP" for V-REP simulation
+exp.TASK_ID = "wander_1k"
+exp.FILE_MODEL = exp.TASK_ID + "_model"
+
+exp.ALGORITHM = "TOSL"
+exp.ACTION_STRATEGY = "QBIASSR"
+ 
+exp.N_REPETITIONS = 1
+exp.N_EPISODES = 1
+exp.N_STEPS = 60 * 60
+
+exp.DISPLAY_STEP = 500
+
 rlrobot.run()
