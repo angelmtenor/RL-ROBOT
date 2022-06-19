@@ -1,5 +1,7 @@
 # RL-ROBOT
 
+Ángel Martínez-Tenor - 2016
+
 <img alt="Robot" src="images/test_giraff.jpg" width="300">
 
 This repository provides a Reinforcement Learning framework in Python from the Machine Perception and Intelligent Robotics research group [(MAPIR)](http://mapir.isa.uma.es).
@@ -7,18 +9,24 @@ This repository provides a Reinforcement Learning framework in Python from the M
 Reference: *Towards a common implementation of reinforcement learning for multiple robotics tasks*. &nbsp; [Arxiv preprint](https://arxiv.org/abs/1702.06329) &nbsp;&nbsp;
 [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S0957417417307613) 
 
-## Requirements
-
-Tested on Ubuntu 14.04, 16.04, and 18.04 (64 bits)
-
-* Python >= 3.4
-* numpy >= 1.11
-* matplotlib >= 1.5
-* tkinter   `sudo apt install python-tk`
-
-## Try RL-ROBOT:
 
 <img alt="Architecture" src="images/architecture.jpg" width="600">
+
+
+## Getting Started
+
+**Setup**
+- Create a python environment and install the requirements. e.g. using conda:
+
+```
+conda create -n rlrobot python=3.10
+conda activate rlrobot
+pip install -r requirements.txt
+# tkinter: sudo apt install python-tk 
+```
+**Run**
+- Execute ```python run_custom_exp.py``` (content below)
+
 
 ~~~
 import exp
@@ -39,7 +47,9 @@ exp.DISPLAY_STEP = 500
 
 rlrobot.run()
 ~~~
-Full set of parameters available in `exp.py`. 
+- Full set of parameters available in `exp.py` 
+
+- Tested on Ubuntu 14,16 ,18, 20 (64 bits)
 
 
 ## V-REP settings: 
